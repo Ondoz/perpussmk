@@ -24,4 +24,14 @@ class PeminjamanItem extends Model
             return $q->uuid = Uuid::uuid4();
         });
     }
+
+    public function peminjaman()
+    {
+        return $this->belongsTo(Peminjaman::class);
+    }
+
+    public function buku()
+    {
+        return $this->belongsTo(Buku::class);
+    }
 }

@@ -17,6 +17,9 @@
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
+    <script>
+        var ajaxUrlAdmin = '{{url('admin')}}/';
+    </script>
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -64,6 +67,7 @@
 	<!--end::Global Javascript Bundle-->
 	<!--begin::Page Vendors Javascript(used by this page)-->
 	<script src="{{asset('assets/admin/plugins/custom/leaflet/leaflet.bundle.js')}}"></script>
+    <script src="{{asset('assets/admin/plugins/custom/fslightbox/fslightbox.bundle.js')}}"></script>
 	<!--end::Page Vendors Javascript-->
 	<!--begin::Page Custom Javascript(used by this page)-->
 	<script src="{{asset('assets/admin/js/custom/modals/select-location.js')}}"></script>
@@ -71,8 +75,11 @@
 	<script src="{{asset('assets/admin/js/custom/apps/chat/chat.js')}}"></script>
 	<script src="{{asset('assets/admin/js/custom/modals/create-app.js')}}"></script>
 	<script src="{{asset('assets/admin/js/custom/modals/upgrade-plan.js')}}"></script>
-	<!--end::Page Custom Javascript-->
+
+
 	<!--end::Javascript-->
+    @stack('js');
+
 </body>
 <!--end::Body-->
 

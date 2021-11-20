@@ -10,7 +10,8 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        return view('admin.peminjaman.index');
+        $peminjaman = Peminjaman::orderByDesc('id')->get();
+        return view('admin.peminjaman.index', compact('peminjaman'));
     }
 
     public function store(Request $request)

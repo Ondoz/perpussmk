@@ -16,6 +16,7 @@ class BukuFactory extends Factory
         return [
             'title' => $this->faker->title(),
             'description' => $this->faker->text(),
+            'jumlah_buku'=> $this->faker->numberBetween(50, 200)
         ];
     }
 }

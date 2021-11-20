@@ -6,10 +6,9 @@
         <!--begin::Card-->
         <div class="card">
             <!--begin::Card body-->
-            
             <!--end::Card body-->
               <!--begin::Card header-->
-              <div class="card-header border-0 pt-6">
+              <div class="card-header border-0 py-6">
                 <!--begin::Card title-->
                 <div class="card-title">
                     <!--begin::Search-->
@@ -36,118 +35,97 @@
                         <!--end::Add customer-->
                     </div>
                     <!--end::Toolbar-->
-                    <!--begin::Group actions-->
-                    <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
-                        <div class="fw-bolder me-5">
-                        <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected</div>
-                        <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
-                    </div>
-                    <!--end::Group actions-->
                 </div>
                 <!--end::Card toolbar-->
             </div>
             <!--end::Card header-->
-            <!--begin::Card body-->
-            <div class="card-body pt-0">
-                <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
-                    <!--begin::Table head-->
-                    <thead>
-                        <!--begin::Table row-->
-                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th class="min-w-15px">No</th>
-                            <th class="min-w-125px">Title</th>
-                            <th class="min-w-125px">Description</th>
-                            <th class="min-w-125px">Kategori</th>
-                        </tr>
-                        <!--end::Table row-->
-                    </thead>
-                    <!--end::Table head-->
-                    <!--begin::Table body-->
-                    <tbody class="fw-bold text-gray-600">
-                        @forelse ($buku as $item)
-                        <tr>
-                           
-                            <td>
-                                {{$loop->iteration}}
-                            </td>
-                          
-                            <td>
-                                <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$item->title}}</a>
-                            </td>
 
-                            <td>
-                                <a href="#" class="text-gray-600 text-hover-primary mb-1">{{Str::limit($item->description, 20)}}</a>
-                            </td>
 
-                            <td>
-                                @foreach ($item->kategori as $value)
-                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$value->name }} </a>
-                                    @if($loop->last)
-                                        .
-                                    @elseif($loop->remaining == 1)
-                                        &nbsp;&amp;&nbsp;
-                                    @elseif(!$loop->first)
-                                        ,&nbsp;
-                                    @endif
-                                @endforeach
-                            </td>
-                        
-                            <td class="text-end">
-                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon--></a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo9/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
+        </div>
+        <div class="row pt-10">
+            @forelse ($buku as $item)
+                <div class="col-md-6 col-lg-3 col-xs-12 pb-10">
+                    <div class="card shadow-sm">
+
+                        <div class="card-body p-0 mb-10">
+                            <div class="row px-4 my-6 align-items-center">
+                                <div class="col-8">
+                                    <div class=""><b>{{$item->title}}</b></div>
                                 </div>
-                                <!--end::Menu-->
-                            </td>
-                            <!--end::Action=-->
-                        </tr>
-                      
-                        @empty
-                        <div class="card-body p-0">
-                            <!--begin::Wrapper-->
-                            <div class="card-px text-center py-20 my-10">
-                                <!--begin::Title-->
-                                <h2 class="fs-2x fw-bolder mb-10">Welcome!</h2>
-                                <!--end::Title-->
-                                <!--begin::Description-->
-                                <p class="text-gray-400 fs-4 fw-bold mb-10">Data Buku Masih Kosong </p>
-                                <!--end::Description-->
-                                <!--begin::Action-->
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Tambah Buku</a>
-                                <!--end::Action-->
+                                <div class="col-4">
+                                    <div class="">
+                                        <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions</a>
+                                         <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a href="../../demo9/dist/apps/customers/view.html" class="menu-link px-3">View</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu-->
+                                    </div>
+                                </div>
                             </div>
-                            <!--end::Wrapper-->
-                            <!--begin::Illustration-->
+
                             <div class="text-center px-4">
-                                <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sigma-1/2.png" />
+                                {{-- <img class="mw-100 mh-300px card-rounded-bottom" alt="" src="{{$item->image}}"/> --}}
+                                <!--begin::Overlay-->
+                                <a class="d-block overlay" data-fslightbox="lightbox-basic" href="{{$item->image}}">
+                                    <!--begin::Image-->
+                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-300px" style="background-image:url({{$item->image}})"></div>
+                                    <!--end::Image-->
+                                    <!--begin::Action-->
+                                    <div class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
+                                        <i class="bi bi-eye-fill text-white fs-3x"></i>
+                                    </div>
+                                    <!--end::Action-->
+                                </a>
+                                <!--end::Overlay-->
                             </div>
-                            <!--end::Illustration-->
                         </div>
-                        @endforelse
-                    </tbody>
-                    <!--end::Table body-->
-                </table>
-                <!--end::Table-->
-            </div>
-            <!--end::Card body-->
+                        <div class="card-footer">
+                            <span class="text-gray-600 fs-8">Kategori : </span>
+                            @foreach ($item->kategori as $value)
+                            <a href="#" class="text-gray-600 fs-8">{{$value->name}} </a>
+                            @if($loop->last)
+                            .
+                            @elseif($loop->remaining == 1)
+                            &nbsp;&amp;&nbsp;
+                                @elseif(!$loop->first)
+                                    ,&nbsp;
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="card-body p-0">
+                    <!--begin::Wrapper-->
+                    <div class="card-px text-center py-20 my-10">
+                        <!--begin::Title-->
+                        <h2 class="fs-2x fw-bolder mb-10">Welcome!</h2>
+                        <!--end::Title-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fs-4 fw-bold mb-10">Data Buku Masih Kosong </p>
+                        <!--end::Description-->
+                        <!--begin::Action-->
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Tambah Buku</a>
+                        <!--end::Action-->
+                    </div>
+                    <!--end::Wrapper-->
+                    <!--begin::Illustration-->
+                    <div class="text-center px-4">
+                        <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sigma-1/2.png" />
+                    </div>
+                    <!--end::Illustration-->
+                </div>
+            @endforelse
         </div>
 
         <!--begin::Modals-->
@@ -158,7 +136,7 @@
                 <!--begin::Modal content-->
                 <div class="modal-content">
                     <!--begin::Form-->
-                    <form class="form" action="{{route('admin.buku.store')}}" id="kt_modal_add_customer_form" method="post">
+                    <form class="form" action="{{route('admin.buku.store')}}" id="kt_modal_add_customer_form" enctype="multipart/form-data" method="post">
                         @csrf
                         <!--begin::Modal header-->
                         <div class="modal-header" id="kt_modal_add_customer_header">
@@ -218,7 +196,58 @@
                                     </select>
                                     <!--end::Input-->
                                 </div>
-                                
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Number Of Book</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="number" class="form-control form-control-solid" placeholder="" name="jumlah_buku" placeholder="Description" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class=" mb-7 fv-row text-center">
+                                    <!--begin::Image input-->
+                                    <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url(/assets/admin/media/avatars/blank.png)">
+                                        <!--begin::Image preview wrapper-->
+                                        <div class="image-input-wrapper w-125px h-125px"></div>
+                                        <!--end::Image preview wrapper-->
+
+                                        <!--begin::Edit button-->
+                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                           data-kt-image-input-action="change"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-dismiss="click"
+                                           title="Change avatar">
+                                            <i class="bi bi-pencil-fill fs-7"></i>
+
+                                            <!--begin::Inputs-->
+                                            <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+
+                                            <!--end::Inputs-->
+                                        </label>
+                                        <!--end::Edit button-->
+
+                                        <!--begin::Cancel button-->
+                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                           data-kt-image-input-action="cancel"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-dismiss="click"
+                                           title="Cancel avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                        <!--end::Cancel button-->
+
+                                         <!--begin::Remove button-->
+                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                         data-kt-image-input-action="remove"
+                                         data-bs-toggle="tooltip"
+                                         data-bs-dismiss="click"
+                                         title="Remove avatar">
+                                         <i class="bi bi-x fs-2"></i>
+                                     </span>
+                                    </div>
+                                    <!--end::Image input-->
+                                </div>
                             </div>
                             <!--end::Scroll-->
                         </div>

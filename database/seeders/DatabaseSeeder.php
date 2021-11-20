@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             $kategori = Kategori::inRandomOrder()->take(rand(1, 3))->pluck('id');
             foreach ($kategori as $kat) {
                 $buku->kategori()->attach($kat);
-            }
+                $this->call(UsersTableSeeder::class);
+    }
         }
     }
 }

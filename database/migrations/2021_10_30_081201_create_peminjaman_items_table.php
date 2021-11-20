@@ -16,11 +16,11 @@ class CreatePeminjamanItemsTable extends Migration
         Schema::create('peminjaman_items', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            $table->unsignedBigInteger('peminjamen_id');
+            $table->unsignedBigInteger('peminjaman_id');
             $table->unsignedBigInteger('buku_id');
             $table->enum('is_status', ['true', 'false']);
             $table->timestamps();
-            $table->foreign('peminjamen_id')->references('id')->on('peminjamen')->onDelete('cascade');
+            $table->foreign('peminjaman_id')->references('id')->on('peminjaman')->onDelete('cascade');
             $table->foreign('buku_id')->references('id')->on('bukus')->onDelete('cascade');
         });
     }

@@ -98,11 +98,19 @@
                             <span class="menu-title">Peminjaman</span>
                         </a>
                     </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{route('admin.peminjaman.index')}}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Pengembalian</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="menu-item py-3">
-                <a class="menu-link {{Helpers::menuActive('/')}}" href="../../demo9/dist/index.html" title="List 
+                <a class="menu-link {{Helpers::menuActive('/')}}" href="../../demo9/dist/index.html" title="List
                 User"
                     data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
                     data-bs-placement="right">
