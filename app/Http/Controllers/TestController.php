@@ -10,7 +10,7 @@ class TestController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::all();
+        $peminjaman = Peminjaman::first();
 
         return view('test', compact('peminjaman'));
     }

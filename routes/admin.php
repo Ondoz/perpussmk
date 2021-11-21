@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\{
     PeminjamanController,
     UserController
 };
+use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::group(['prefix' => 'buku', 'as' => 'buku.'], function () {
 
 Route::group(['prefix' => 'peminjaman', 'as' => 'peminjaman.'], function () {
     Route::get('/', [PeminjamanController::class, 'index'])->name('index');
+    Route::get('/scan/{code}', [PeminjamanController::class, 'show'])->name('show');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

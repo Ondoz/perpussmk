@@ -1,4 +1,8 @@
 @extends('layouts.admin.app')
+@push('css')
+<script src="//rawcdn.githack.com/tobiasmuehl/instascan/4224451c49a701c04de7d0de5ef356dc1f701a93/bin/instascan.min.js">
+</script>
+@endpush
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Container-->
@@ -28,10 +32,42 @@
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
-                    <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                    <div class="d-flex justify-content-end" style="padding-right: 10px" data-kt-customer-table-toolbar="base">
                         <!--begin::Add customer-->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Kategori</button>
+                        <button type="button" class="btn btn-primary my" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Kategori</button>
                         <!--end::Add customer-->
+                    </div>
+                    <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                        <button type="button" class="btn btn-info " data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Scan QRcode</button>
+                    </div>
+                    
+                    <div class="account">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="qrcode-left">
+                                        <div class="qrcode-left-title">Scan QR Code Produk</div>
+                                        <div class="qrcode-left-body">
+                                            <video id="reader" style="width: 100%; display:none;"></video>
+                                        <div class="form-group formInput">
+                                            <input type="text" class="form-control" name="code" id="code" placeholder="Unique Code">
+                                        </div>
+                                        <img class="qrcode-code" src="{{asset('Scan.svg')}}" alt="">
+                                        <select class="form-control mt-4 selectCam">
+                                            <option value=""></option>
+                                        </select>
+                                        <a class="scan scanStart btn medium" style="margin-top: 10px; background: #603813; color:#fff"  href="javascript:;">Mulai Scan QR Code</a>
+                                        <a class="scan inputManual btn " style="margin-top: 10px;" href="javascript:;">Input Manual QR Code</a>
+                                        <a class="scan submitManual btn medium" style="margin-top: 10px; background: #603813; color:#fff" href="javascript:;">Submit</a>
+                                        <a class="scan switchToScan" style="margin-top: 10px;" href="javascript:;">Switch to
+                                            Scan</a>
+                                        <a class="scan scanStop" style="margin-top: 10px; display: none;" href="javascript:;">Stop
+                                            Scanning</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-85"></div>
+                        </div>
                     </div>
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
@@ -56,7 +92,7 @@
                             <th class="min-w-15px">No</th>
                             <th class="min-w-125px">Code</th>
                             <th class="min-w-125px">Nama</th>
-                            <th class="min-w-125px">Kelas</th>
+                            <th class="min-w-125px">Status</th>
                             <th class="min-w-125px">Tgl Peminjaman</th>
                             <th class="min-w-125px">Tgl Pengembalian</th>
                         </tr>
@@ -74,7 +110,19 @@
                             <!--end::Name=-->
                             <!--begin::Email=-->
                             <td>
-                                <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$item->name}}</a>
+                                <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$item->is_code}}</a>
+                            </td>
+                            <td>
+                                <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$item->user->name}}</a>
+                            </td>
+                            <td>
+                                {{$item->is_status}}
+                            </td>
+                            <td>
+                                {{$item->date_start}}
+                            </td>
+                            <td>
+                                {{$item->date_end}}
                             </td>
                             <!--end::Email=-->
                             <!--begin::Action=-->
@@ -310,6 +358,7 @@
 @endsection
 @push('js')
 <script>
+    
     $(document).on('click', '.edit', function(){
         id = $(this).attr('data-uuid');
         $('#form-edit').attr('action', ajaxUrlAdmin + 'kategori/' + id);
@@ -348,6 +397,119 @@
                 window.location.href = "{{route('admin.kategori.index')}}";
             }
         })
+    });
+
+    var cam;
+
+    $(document).ready(function () {
+        $('.selectCam').hide();
+        $('.submitManual').hide();
+        $('.formInput').hide();
+        $('.switchToScan').hide();
+    });
+
+    $('.inputManual').click(function () {
+        $('#reader').hide();
+        $('.qrcode-code').hide();
+        $('.scanStop').hide();
+        $('.scanStart').hide();
+        $('.formInput').show();
+        $('.switchToScan').show();
+        $('.submitManual').show();
+        if (cam.length > 0) {
+            if (cam.length > 1) {
+                $('.selectCam').hide();
+            }
+            scanner.start(cam[0]);
+            $(this).hide();
+        } else {
+            alert('No cameras found.');
+        };
+    });
+    $('.switchToScan').click(function () {
+        $('.qrcode-code').show();
+        $('.scanStart').show();
+        $('.formInput').hide();
+        $('.switchToScan').hide();
+        $('.submitManual').hide();
+        $('.inputManual').show();
+        $(this).hide();
+    });
+
+    $('.submitManual').click(function () {
+        var $code = $('#code').val();
+        if ($code === '') {
+            alert('The code was empty');
+            return false;
+        }
+
+        $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+        $.ajax({
+            type: "POST",
+            url: scriptUrl + "/scratch/validation",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                code: $code
+            },
+            dataType: "JSON",
+            success: function (e) {
+                if (e.success) {
+                    location.href = e.url;
+                } else {
+                    alert(e.message);
+                    $('.submitManual').html('Submit');
+                }
+            }
+        });
+    });
+
+    let scanner = new Instascan.Scanner({ video: document.getElementById('reader') });
+    scanner.addListener('scan', function (content) {
+        window.location.href = content;
+        // alert(content);
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+        cam = cameras;
+    }).catch(function (e) {
+        console.error(e);
+    });
+
+    $("body").on("change", ".selectCam", function () {
+        var $val = $(this).val();
+        scanner.start(cam[$val]);
+    });
+
+    $('.scanStop').click(function () {
+        scanner.stop();
+        $('#reader').hide();
+        $('.qrcode-code').show();
+        $('.scanStart').show();
+        $(this).hide();
+    })
+
+    $('.scanStart').click(function () {
+        $('#reader').show();
+        $('.qrcode-code').hide();
+        if (cam.length > 0) {
+            if (cam.length > 1) {
+
+                $('.selectCam').show();
+                $('.selectCam option').remove();
+                var $camSelector = $('.selectCam');
+                $.each(cam, function (index, value) {
+                    console.log(index);
+                    var $data = '<option value="' + index + '">' + value.name + '</option>'
+                    $camSelector.append($data);
+                });
+                $camSelector.append('<option value="1">Kedua</option>');
+            }
+            scanner.start(cam[0]);
+            $(this).hide();
+            $('.scanStop').show();
+        } else {
+            alert('No cameras found.');
+        };
     });
 </script>
 @endpush

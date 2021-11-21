@@ -22,4 +22,10 @@ class PeminjamanController extends Controller
 
         return back();
     }
+
+    public function show($code)
+    {
+        $peminjaman = Peminjaman::where('is_code', $code)->FirstOrFail();
+        return response()->json($peminjaman);
+    }
 }

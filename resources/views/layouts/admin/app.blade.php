@@ -20,6 +20,8 @@
     <script>
         var ajaxUrlAdmin = '{{url('admin')}}/';
     </script>
+
+	@stack('css')
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
