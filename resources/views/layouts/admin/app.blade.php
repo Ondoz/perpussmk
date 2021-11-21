@@ -17,6 +17,7 @@
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
+
     <script>
         var ajaxUrlAdmin = '{{url('admin')}}/';
     </script>
@@ -77,6 +78,7 @@
 	<script src="{{asset('assets/admin/js/custom/apps/chat/chat.js')}}"></script>
 	<script src="{{asset('assets/admin/js/custom/modals/create-app.js')}}"></script>
 	<script src="{{asset('assets/admin/js/custom/modals/upgrade-plan.js')}}"></script>
+    <script src="{{asset('js/app.js')}}"></script>
 
 
 	<!--end::Javascript-->

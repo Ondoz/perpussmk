@@ -20,7 +20,7 @@ class CreatePeminjamanTable extends Migration
             $table->date('date_end')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('is_code');
-            $table->enum('is_status',['canceled', 'padding','success']);
+            $table->enum('is_status',['canceled', 'pending','success']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

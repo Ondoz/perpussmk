@@ -44,7 +44,7 @@ class PeminjamanTest extends Command
             $faker = Factory::create();
             $peminjaman = Peminjaman::create([
                 'user_id' => $faker->unique()->numberBetween(1,11),
-                'is_status'=> 'padding'
+                'is_status'=> 'pending'
             ]);
             for ($a = 0; $a < 3; $a++) {
                 $peminjaman->peminjamanitem()->create([

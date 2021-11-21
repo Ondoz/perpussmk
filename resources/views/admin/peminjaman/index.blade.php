@@ -38,37 +38,10 @@
                         <!--end::Add customer-->
                     </div>
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                        <button type="button" class="btn btn-info " data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Scan QRcode</button>
+                        <button type="button" class="btn btn-info " data-bs-toggle="modal" data-bs-target="#scanModal">Scan QRcode</button>
                     </div>
-                    
-                    <div class="account">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="qrcode-left">
-                                        <div class="qrcode-left-title">Scan QR Code Produk</div>
-                                        <div class="qrcode-left-body">
-                                            <video id="reader" style="width: 100%; display:none;"></video>
-                                        <div class="form-group formInput">
-                                            <input type="text" class="form-control" name="code" id="code" placeholder="Unique Code">
-                                        </div>
-                                        <img class="qrcode-code" src="{{asset('Scan.svg')}}" alt="">
-                                        <select class="form-control mt-4 selectCam">
-                                            <option value=""></option>
-                                        </select>
-                                        <a class="scan scanStart btn medium" style="margin-top: 10px; background: #603813; color:#fff"  href="javascript:;">Mulai Scan QR Code</a>
-                                        <a class="scan inputManual btn " style="margin-top: 10px;" href="javascript:;">Input Manual QR Code</a>
-                                        <a class="scan submitManual btn medium" style="margin-top: 10px; background: #603813; color:#fff" href="javascript:;">Submit</a>
-                                        <a class="scan switchToScan" style="margin-top: 10px;" href="javascript:;">Switch to
-                                            Scan</a>
-                                        <a class="scan scanStop" style="margin-top: 10px; display: none;" href="javascript:;">Stop
-                                            Scanning</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-85"></div>
-                        </div>
-                    </div>
+
+
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
                     <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
@@ -116,7 +89,7 @@
                                 <a href="#" class="text-gray-600 text-hover-primary mb-1">{{$item->user->name}}</a>
                             </td>
                             <td>
-                                {{$item->is_status}}
+                                {!!$item->span_status!!}
                             </td>
                             <td>
                                 {{$item->date_start}}
@@ -321,7 +294,7 @@
         </div>
         <!--end::Modal - Kategori - Edit-->
 
-        <!--begin::Modal - Kategori - Edit-->
+        <!--begin::Modal - Kategori - Delete-->
         <div class="modal fade" id="confirmModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -349,16 +322,59 @@
                 </div>
             </div>
         </div>
-        <!--end::Modal - Kategori - Edit-->
+        <!--end::Modal - Kategori - Delete-->
 
-        <!--end::Modals-->
+        <div class="modal fade" id="scanModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Scan</h5>
+                        <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                    </div>
+                    <input type="hidden" name="uuid" id="uuid-delete" value="">
+                    <div class="modal-body">
+                        <!--end::Modals-->
+                        <div class="account">
+                            <div class="container text-center">
+                                    <div class="qrcode-left-body">
+                                        <video id="reader" style="width: 100%; display:none;"></video>
+                                    <div class="form-group formInput">
+                                        <input type="text" class="form-control" name="code" id="code" placeholder="Unique Code">
+                                    </div>
+                                    <img class="qrcode-code" src="{{asset('Scan.svg')}}" alt="">
+                                    <select class="form-control mt-4 selectCam">
+                                        <option value=""></option>
+                                    </select>
+                                    <a class="scan scanStart btn medium btn-primary" style="margin-top: 10px;"  href="javascript:;">Mulai Scan QR Code</a>
+                                    <a class="scan inputManual btn btn-light-primary font-weight-bold" style="margin-top: 10px;" href="javascript:;">Input Manual QR Code</a>
+                                    <a class="scan submitManual btn medium btn-primary" style="margin-top: 10px;" href="javascript:;">Submit</a>
+                                    <a class="scan switchToScan btn btn-light-primary font-weight-bold" style="margin-top: 10px;" href="javascript:;">Switch toScan</a>
+                                    <a class="scan scanStop btn btn-light-primary font-weight-bold" style="margin-top: 10px; display: none;" href="javascript:;">Stop
+                                        Scanning</a></div>
+
+                                <div class="space-85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!--end::Container-->
 </div>
 @endsection
 @push('js')
 <script>
-    
+
     $(document).on('click', '.edit', function(){
         id = $(this).attr('data-uuid');
         $('#form-edit').attr('action', ajaxUrlAdmin + 'kategori/' + id);
@@ -399,117 +415,5 @@
         })
     });
 
-    var cam;
-
-    $(document).ready(function () {
-        $('.selectCam').hide();
-        $('.submitManual').hide();
-        $('.formInput').hide();
-        $('.switchToScan').hide();
-    });
-
-    $('.inputManual').click(function () {
-        $('#reader').hide();
-        $('.qrcode-code').hide();
-        $('.scanStop').hide();
-        $('.scanStart').hide();
-        $('.formInput').show();
-        $('.switchToScan').show();
-        $('.submitManual').show();
-        if (cam.length > 0) {
-            if (cam.length > 1) {
-                $('.selectCam').hide();
-            }
-            scanner.start(cam[0]);
-            $(this).hide();
-        } else {
-            alert('No cameras found.');
-        };
-    });
-    $('.switchToScan').click(function () {
-        $('.qrcode-code').show();
-        $('.scanStart').show();
-        $('.formInput').hide();
-        $('.switchToScan').hide();
-        $('.submitManual').hide();
-        $('.inputManual').show();
-        $(this).hide();
-    });
-
-    $('.submitManual').click(function () {
-        var $code = $('#code').val();
-        if ($code === '') {
-            alert('The code was empty');
-            return false;
-        }
-
-        $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
-        $.ajax({
-            type: "POST",
-            url: scriptUrl + "/scratch/validation",
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                code: $code
-            },
-            dataType: "JSON",
-            success: function (e) {
-                if (e.success) {
-                    location.href = e.url;
-                } else {
-                    alert(e.message);
-                    $('.submitManual').html('Submit');
-                }
-            }
-        });
-    });
-
-    let scanner = new Instascan.Scanner({ video: document.getElementById('reader') });
-    scanner.addListener('scan', function (content) {
-        window.location.href = content;
-        // alert(content);
-    });
-
-    Instascan.Camera.getCameras().then(function (cameras) {
-        cam = cameras;
-    }).catch(function (e) {
-        console.error(e);
-    });
-
-    $("body").on("change", ".selectCam", function () {
-        var $val = $(this).val();
-        scanner.start(cam[$val]);
-    });
-
-    $('.scanStop').click(function () {
-        scanner.stop();
-        $('#reader').hide();
-        $('.qrcode-code').show();
-        $('.scanStart').show();
-        $(this).hide();
-    })
-
-    $('.scanStart').click(function () {
-        $('#reader').show();
-        $('.qrcode-code').hide();
-        if (cam.length > 0) {
-            if (cam.length > 1) {
-
-                $('.selectCam').show();
-                $('.selectCam option').remove();
-                var $camSelector = $('.selectCam');
-                $.each(cam, function (index, value) {
-                    console.log(index);
-                    var $data = '<option value="' + index + '">' + value.name + '</option>'
-                    $camSelector.append($data);
-                });
-                $camSelector.append('<option value="1">Kedua</option>');
-            }
-            scanner.start(cam[0]);
-            $(this).hide();
-            $('.scanStop').show();
-        } else {
-            alert('No cameras found.');
-        };
-    });
 </script>
 @endpush
