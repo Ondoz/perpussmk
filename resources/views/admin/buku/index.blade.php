@@ -282,8 +282,10 @@
                 <div class="modal-content">
                     <!--begin::Form-->
                      <!--begin::Form-->
-                     <form class="form" action="{{route('admin.buku.store')}}" id="kt_modal_edit_customer" enctype="multipart/form-data" method="post">
+                     <form class="form" action="#" id="form-edit" enctype="multipart/form-data" method="post">
+                        {{method_field('PUT')}}
                         @csrf
+                        <input type="hidden" name="uuid" id="uuid" value="">
                         <!--begin::Modal header-->
                         <div class="modal-header" id="kt_modal_add_buku_header">
                             <!--begin::Modal title-->
@@ -463,12 +465,13 @@
     var id_kategori = [];
     $(document).on('click', '.edit', function(){
         id = $(this).attr('data-uuid');
-        $('#form-edit').attr('action', ajaxUrlAdmin + 'kategori/' + id);
+        $('#form-edit').attr('action', ajaxUrlAdmin + 'buku/' + id);
         $.ajax({
             url: ajaxUrlAdmin + 'buku/' + id + '/edit',
             dataType: "JSON",
             type: "GET",
             success: function(result){
+                $('#uuid').val(result.uuid);
                 $("#title").val(result.title);
                 $('#description').val(result.description)
                 $('#jumlah_buku').val(result.jumlah_buku)

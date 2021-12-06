@@ -43,13 +43,12 @@ class PeminjamanTest extends Command
         for ($i = 0; $i < 10; $i++) {
             $faker = Factory::create();
             $peminjaman = Peminjaman::create([
-                'user_id' => $faker->unique()->numberBetween(1,11),
-                'is_status'=> 'pending'
+                'user_id' => $faker->unique()->numberBetween(1, 11),
+                'is_status' => 'pending'
             ]);
             for ($a = 0; $a < 3; $a++) {
                 $peminjaman->peminjamanitem()->create([
-                    'peminjaman_id' => $faker->unique()->numberBetween(1,5),
-                    'buku_id' => $faker->unique()->numberBetween(1,10),
+                    'buku_id' => $faker->unique()->numberBetween(1, 10),
                     'is_status' => 'false'
                 ]);
             }

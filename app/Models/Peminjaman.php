@@ -37,7 +37,7 @@ class Peminjaman extends Model
      *
      * @return BinaryCats\Sku\SkuOptions
      */
-    public function skuOptions() : SkuOptions
+    public function skuOptions(): SkuOptions
     {
         return SkuOptions::make()
             ->from('')
@@ -55,16 +55,16 @@ class Peminjaman extends Model
         // $date_confirmation =  date('Y-m-d', strtotime('+1 days', strtotime($this->attributes['created_at'])));
         switch ($status) {
             case "success":
-                return '<span class="badge badge-light-danger fs-8 fw-bolder">Success</span>';
+                return '<span class="badge badge-light-success fs-8 fw-bolder">Success</span>';
                 break;
             case "canceled":
-                if($date_now >= $date_confirmation){
+                if ($date_now >= $date_confirmation) {
                     return '<span class="badge badge-light-danger fs-8 fw-bolder">Expired</span>';
                 }
                 return '<span class="badge badge-light-danger fs-8 fw-bolder">Canceled</span>';
                 break;
             case "pending":
-                if($date_now >= $date_confirmation){
+                if ($date_now >= $date_confirmation) {
                     $peminjaman = Peminjaman::find($this->attributes['id'])->first();
                     $peminjaman->update(['is_status' => 'canceled']);
                     return '<span class="badge badge-light-danger fs-8 fw-bolder">Expired</span>';
@@ -83,5 +83,4 @@ class Peminjaman extends Model
     {
         return $this->hasMany(PeminjamanItem::class);
     }
-
 }

@@ -48,8 +48,23 @@ class BukuController extends Controller
         return response()->json($buku);
     }
 
-    public function update()
+    public function update(Request $request, $uuid)
     {
+        $buku = Buku::where('uuid', $uuid)->firstorFail();
+        $buku->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'jumlah_buku' => $request->jumlah_buku
+        ]);
+
+        $buku->kategori()->sync($request->kategori);
+
+        if ($request->hasFile('image')) {
+            $buku->clearMediaCollection('book');
+            $buku->addMediaFromRequest('image')->toMediaCollection('book', 'public');
+        };
+
+        return back();
     }
 
     public function destroy($uuid)
