@@ -35,10 +35,26 @@ class BukuController extends Controller
 
         $buku->kategori()->attach($request->kategori);
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $buku->addMediaFromRequest('image')->toMediaCollection('book', 'public');
         }
 
         return back();
+    }
+
+    public function edit($uuid)
+    {
+        $buku = Buku::where('uuid', $uuid)->with('kategori')->FirstorFail();
+        return response()->json($buku);
+    }
+
+    public function update()
+    {
+    }
+
+    public function destroy($uuid)
+    {
+        $buku = Buku::where('uuid', $uuid)->FirstorFail();
+        $buku->delete();
     }
 }

@@ -17,10 +17,9 @@ Route::resource('kategori', KategoriController::class)->except([
     'create', 'show'
 ]);
 
-Route::group(['prefix' => 'buku', 'as' => 'buku.'], function () {
-    Route::get('/', [BukuController::class, 'index'])->name('index');
-    Route::post('/', [BukuController::class, 'store'])->name('store');
-});
+Route::resource('buku', BukuController::class)->except([
+    'create', 'show'
+]);
 
 Route::group(['prefix' => 'peminjaman', 'as' => 'peminjaman.'], function () {
     Route::get('/', [PeminjamanController::class, 'index'])->name('index');

@@ -27,16 +27,16 @@ class PeminjamanController extends Controller
     public function show($code)
     {
         $peminjaman = Peminjaman::where('is_code', $code)->FirstOrFail();
-        if($peminjaman){
+        if ($peminjaman) {
             $update = $peminjaman->update([
                 'date_start' => Carbon::now()->toDateString(),
                 'date_end' =>   Carbon::now()->addDay(7)->toDateString(),
                 'is_status' => 'success'
             ]);
 
-            if($update){
+            if ($update) {
                 return back();
-            }else{
+            } else {
                 return abort(404);
             }
         }
