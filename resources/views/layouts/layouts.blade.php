@@ -17,6 +17,9 @@
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets/admin/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{asset('assets/admin/css/custom.css')}}">
+
+
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -53,7 +56,7 @@
 
 	<!--end::Scrolltop-->
 	<!--end::Main-->
-	<script>var hostUrl = 'assets/admin/' ;</script>
+    <script>var hostUrl = 'assets/admin/' ;</script>
 	{{-- <script src="assets/admin/plugins/global/plugins.bundle.js"></script> --}}
 
 	<!--begin::Javascript-->
@@ -63,6 +66,7 @@
 	<!--end::Global Javascript Bundle-->
 	<!--begin::Page Vendors Javascript(used by this page)-->
 	<script src="{{asset('assets/admin/plugins/custom/leaflet/leaflet.bundle.js')}}"></script>
+    <script src="{{asset('assets/admin/plugins/custom/fslightbox/fslightbox.bundle.js')}}"></script>
 	<!--end::Page Vendors Javascript-->
 	<!--begin::Page Custom Javascript(used by this page)-->
 	<script src="{{asset('assets/admin/js/custom/modals/select-location.js')}}"></script>
