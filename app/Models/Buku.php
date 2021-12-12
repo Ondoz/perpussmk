@@ -11,6 +11,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use BinaryCats\Sku\HasSku;
 use BinaryCats\Sku\Concerns\SkuOptions;
+use Carbon\Carbon;
 
 class Buku extends Model implements HasMedia
 {
@@ -34,12 +35,12 @@ class Buku extends Model implements HasMedia
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
-      /**
+    /**
      * Get the options for generating the Sku.
      *
      * @return BinaryCats\Sku\SkuOptions
      */
-    public function skuOptions() : SkuOptions
+    public function skuOptions(): SkuOptions
     {
         return SkuOptions::make()
             ->from(['title'])
@@ -62,14 +63,24 @@ class Buku extends Model implements HasMedia
     public function getImageAttribute()
     {
         $media = $this->getMedia('book');
-        if($media->count() > 0) {
+        if ($media->count() > 0) {
             $firstMedia = $media->first();
             $key = 'image_' . $firstMedia->uuid;
             return cache()->rememberForever($key, function () use ($firstMedia) {
                 return $firstMedia->getFullUrl();
             });
-        }else{
+        } else {
             return 'https://ui-avatars.com/api/?name=' . urlencode($this->attributes['title']);
+        }
+    }
+
+    public function getNewBookAttribute()
+    {
+        $newBookDate = $this->attributes['created_at'];
+        if (Carbon::now()->between(Carbon::parse($newBookDate), Carbon::parse($newBookDate)->add(7, 'day'))) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -82,5 +93,4 @@ class Buku extends Model implements HasMedia
     {
         return $this->hasMany(PeminjamanItem::class);
     }
-
 }

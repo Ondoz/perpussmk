@@ -1,8 +1,6 @@
 @extends('layouts.layouts')
 @section('content')
 
-
-
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Container-->
     <div class="container-xxl" id="kt_content_container">
@@ -37,7 +35,7 @@
                 <!--end::Body-->
             </div>
         </div>
-        <!--begin::Home card-->
+        <!--begin::new book card-->
         <div class="card">
             <!--begin::Body-->
             <div class="card-body p-lg-20">
@@ -250,162 +248,47 @@
                     </div>
                     <!--begin::Row-->
                     <div class="row g-10">
-                        <!--end::Col--><!--begin::Col-->
-                        <div class="col-md-3">
-                            <!--begin::Publications post-->
-                            <div class="card-xl-stretch me-md-6">
-                                <!--begin::Overlay-->
-                                <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px" style="background-image:url('{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}')"></div>
-                                    <!--end::Image-->
-                                    <!--begin::Action-->
-                                    <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
-                                        <i class="bi bi-eye-fill fs-2x text-white"></i>
+                        <!--begin::Col-->
+                        @foreach ($newBook as $item)
+                            <div class="col-md-3">
+                                <!--begin::Publications post-->
+                                <div class="card-xl-stretch me-md-6">
+                                    <!--begin::Overlay-->
+                                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="{{$item->image}}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px" style="background-image:url('{{$item->image}}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-2x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Overlay-->
+                                    <!--begin::Body-->
+                                    <div class="m-0">
+                                        <!--begin::Title-->
+                                        <a href="{{$item->image}}" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">{{Str::limit($item->title,20)}}</a>
+                                        <!--end::Title-->
+                                        <!--begin::Text-->
+                                        <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
+                                        <!--end::Text-->
+                                        <!--begin::Content-->
+                                        <div class="fs-6 fw-bolder">
+                                            <!--begin::Author-->
+                                            <a href="/metronic8/demo9/../demo9/pages/projects/users.html" class="text-gray-700 text-hover-primary">{{$item->title}}</a>
+                                            <!--end::Author-->
+                                            <!--begin::Date-->
+                                            <span class="text-muted">on {{date('F d Y', strtotime($item->created_at))}}</span>
+                                            <!--end::Date-->
+                                        </div>
+                                        <!--end::Content-->
                                     </div>
-                                    <!--end::Action-->
-                                </a>
-                                <!--end::Overlay-->
-                                <!--begin::Body-->
-                                <div class="m-0">
-                                    <!--begin::Title-->
-                                    <a href="/metronic8/demo9/../demo9/pages/profile/overview.html" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">Metronic Admin - How To Started the Dashboard Tutorial</a>
-                                    <!--end::Title-->
-                                    <!--begin::Text-->
-                                    <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
-                                    <!--end::Text-->
-                                    <!--begin::Content-->
-                                    <div class="fs-6 fw-bolder">
-                                        <!--begin::Author-->
-                                        <a href="/metronic8/demo9/../demo9/pages/projects/users.html" class="text-gray-700 text-hover-primary">Jane Miller</a>
-                                        <!--end::Author-->
-                                        <!--begin::Date-->
-                                        <span class="text-muted">on Mar 21 2021</span>
-                                        <!--end::Date-->
-                                    </div>
-                                    <!--end::Content-->
+                                    <!--end::Body-->
                                 </div>
-                                <!--end::Body-->
+                                <!--end::Publications post-->
                             </div>
-                            <!--end::Publications post-->
-                        </div>
-                        <!--end::Col--><!--begin::Col-->
-                        <div class="col-md-3">
-                            <!--begin::Publications post-->
-                            <div class="card-xl-stretch me-md-6">
-                                <!--begin::Overlay-->
-                                <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px" style="background-image:url('{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}')"></div>
-                                    <!--end::Image-->
-                                    <!--begin::Action-->
-                                    <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
-                                        <i class="bi bi-eye-fill fs-2x text-white"></i>
-                                    </div>
-                                    <!--end::Action-->
-                                </a>
-                                <!--end::Overlay-->
-                                <!--begin::Body-->
-                                <div class="m-0">
-                                    <!--begin::Title-->
-                                    <a href="/metronic8/demo9/../demo9/pages/profile/overview.html" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">Metronic Admin - How To Started the Dashboard Tutorial</a>
-                                    <!--end::Title-->
-                                    <!--begin::Text-->
-                                    <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
-                                    <!--end::Text-->
-                                    <!--begin::Content-->
-                                    <div class="fs-6 fw-bolder">
-                                        <!--begin::Author-->
-                                        <a href="/metronic8/demo9/../demo9/pages/projects/users.html" class="text-gray-700 text-hover-primary">Jane Miller</a>
-                                        <!--end::Author-->
-                                        <!--begin::Date-->
-                                        <span class="text-muted">on Mar 21 2021</span>
-                                        <!--end::Date-->
-                                    </div>
-                                    <!--end::Content-->
-                                </div>
-                                <!--end::Body-->
-                            </div>
-                            <!--end::Publications post-->
-                        </div>
-                        <!--end::Col--><!--begin::Col-->
-                        <div class="col-md-3">
-                            <!--begin::Publications post-->
-                            <div class="card-xl-stretch me-md-6">
-                                <!--begin::Overlay-->
-                                <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px" style="background-image:url('{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}')"></div>
-                                    <!--end::Image-->
-                                    <!--begin::Action-->
-                                    <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
-                                        <i class="bi bi-eye-fill fs-2x text-white"></i>
-                                    </div>
-                                    <!--end::Action-->
-                                </a>
-                                <!--end::Overlay-->
-                                <!--begin::Body-->
-                                <div class="m-0">
-                                    <!--begin::Title-->
-                                    <a href="/metronic8/demo9/../demo9/pages/profile/overview.html" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">Metronic Admin - How To Started the Dashboard Tutorial</a>
-                                    <!--end::Title-->
-                                    <!--begin::Text-->
-                                    <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
-                                    <!--end::Text-->
-                                    <!--begin::Content-->
-                                    <div class="fs-6 fw-bolder">
-                                        <!--begin::Author-->
-                                        <a href="/metronic8/demo9/../demo9/pages/projects/users.html" class="text-gray-700 text-hover-primary">Jane Miller</a>
-                                        <!--end::Author-->
-                                        <!--begin::Date-->
-                                        <span class="text-muted">on Mar 21 2021</span>
-                                        <!--end::Date-->
-                                    </div>
-                                    <!--end::Content-->
-                                </div>
-                                <!--end::Body-->
-                            </div>
-                            <!--end::Publications post-->
-                        </div>
-                        <!--end::Col-->  <!--end::Col--><!--begin::Col-->
-                        <div class="col-md-3">
-                            <!--begin::Publications post-->
-                            <div class="card-xl-stretch me-md-6">
-                                <!--begin::Overlay-->
-                                <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}">
-                                    <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px" style="background-image:url('{{asset('/assets/admin/media/stock/600x400/img-73.jpg')}}')"></div>
-                                    <!--end::Image-->
-                                    <!--begin::Action-->
-                                    <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
-                                        <i class="bi bi-eye-fill fs-2x text-white"></i>
-                                    </div>
-                                    <!--end::Action-->
-                                </a>
-                                <!--end::Overlay-->
-                                <!--begin::Body-->
-                                <div class="m-0">
-                                    <!--begin::Title-->
-                                    <a href="/metronic8/demo9/../demo9/pages/profile/overview.html" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">Metronic Admin - How To Started the Dashboard Tutorial</a>
-                                    <!--end::Title-->
-                                    <!--begin::Text-->
-                                    <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
-                                    <!--end::Text-->
-                                    <!--begin::Content-->
-                                    <div class="fs-6 fw-bolder">
-                                        <!--begin::Author-->
-                                        <a href="/metronic8/demo9/../demo9/pages/projects/users.html" class="text-gray-700 text-hover-primary">Jane Miller</a>
-                                        <!--end::Author-->
-                                        <!--begin::Date-->
-                                        <span class="text-muted">on Mar 21 2021</span>
-                                        <!--end::Date-->
-                                    </div>
-                                    <!--end::Content-->
-                                </div>
-                                <!--end::Body-->
-                            </div>
-                            <!--end::Publications post-->
-                        </div>
+                        @endforeach
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
@@ -414,7 +297,7 @@
 
             <!--end::Body-->
         </div>
-        <!--end::Home card-->
+        <!--end::new book card-->
     </div>
     <!--end::Container-->
 </div>
