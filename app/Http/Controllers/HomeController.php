@@ -18,13 +18,13 @@ class HomeController extends Controller
 
     protected function topBook($limit = 4)
     {
-        $book = Buku::take($limit)->get();
+        $book = Buku::with('media')->take($limit)->get();
         return $book;
     }
 
     protected function newBook($limit = 4)
     {
-        $book = Buku::take($limit)->get();
+        $book = Buku::with('media')->take($limit)->get();
         return $book;
     }
 }

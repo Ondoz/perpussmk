@@ -1,4 +1,4 @@
-<div class="header-mobile py-3">
+{{-- <div class="header-mobile py-3">
     <!--begin::Container-->
     <div class="container d-flex flex-stack">
         <!--begin::Mobile logo-->
@@ -24,25 +24,7 @@
             </span>
             <!--end::Svg Icon-->
         </button>
-        <!--end::Aside toggle-->
-        <div class="col-xl-">
-            <!--begin::Engage widget 1-->
-            <div class="card bgi-position-y-bottom bgi-position-x-end bgi-no-repeat bgi-size-cover min-h-350px bg-primary mb-5 mb-xl-8" style="background-color: ;background-size: 500px auto;background-image:url('{{asset('/assets/admin/media/misc/city.png')}}')">
-                <!--begin::Body-->
-                <div class="card-body d-flex flex-column justify-content-center ps-lg-12">
-                    <!--begin::Title-->
-                    <h3 class="text-white fs-2qx fw-bolder mb-7">We are working
-                    <br>to boost lovely mood</h3>
-                    <!--end::Title-->
-                    <!--begin::Action-->
-                    <div class="m-0">
-                        <a href="#" class="btn btn-success fw-bold px-6 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create a Store</a>
-                    </div>
-                    <!--begin::Action-->
-                </div>
-                <!--end::Body-->
-            </div>
-        </div>
+
     </div>
     <!--end::Container-->
-</div>
+</div> --}}

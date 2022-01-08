@@ -17,11 +17,12 @@ class CreateBukusTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('uuid');
-            $table->string('title');
-            $table->text('description');
-            $table->string('slug');
-            $table->integer('jumlah_buku');
+            $table->text('judul');
+            $table->text('slug');
+            $table->text('penulis');
+            $table->unsignedBigInteger('kategori_id')->nullable();
             $table->timestamps();
+            $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
         });
     }
 

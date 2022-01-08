@@ -2,10 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Buku;
+use App\Models\DetailBuku;
+use App\Models\Kategori;
 use App\Models\Peminjaman;
 use App\Models\Product;
 use Faker\Factory;
 use Illuminate\Console\Command;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class PeminjamanTest extends Command
 {
@@ -48,12 +53,12 @@ class PeminjamanTest extends Command
             ]);
             for ($a = 0; $a < 3; $a++) {
                 $peminjaman->peminjamanitem()->create([
-                    'buku_id' => $faker->unique()->numberBetween(1, 10),
+                    'buku_id' => $faker->unique()->numberBetween(27, 41),
                     'is_status' => 'false'
                 ]);
             }
             $this->info($peminjaman->user->name);
         }
-        // return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

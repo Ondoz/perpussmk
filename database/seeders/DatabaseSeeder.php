@@ -16,17 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        \App\Models\UserDetails::factory(10)->create();
-        \App\Models\Kategori::factory(10)->create();
-        \App\Models\Buku::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
+        // \App\Models\UserDetails::factory(10)->create();
+        // \App\Models\Kategori::factory(10)->create();
+        // \App\Models\Buku::factory(10)->create();
+        $this->call(UsersTableSeeder::class);
+        $this->call(KategorisTableSeeder::class);
+        $this->call(BukusTableSeeder::class);
+        $this->call(DetailBukusTableSeeder::class);
+        $this->call(MediaTableSeeder::class);
 
-        foreach (Buku::all() as $buku) {
-            $kategori = Kategori::inRandomOrder()->take(rand(1, 3))->pluck('id');
-            foreach ($kategori as $kat) {
-                $buku->kategori()->attach($kat);
-                $this->call(UsersTableSeeder::class);
-    }
-        }
+        // foreach (Buku::all() as $buku) {
+        //     $kategori = Kategori::inRandomOrder()->take(rand(1, 3))->pluck('id');
+        //     foreach ($kategori as $kat) {
+        //         $buku->kategori()->attach($kat);
+        //         $this->call(UsersTableSeeder::class);
+        //     }
+        // }
     }
 }

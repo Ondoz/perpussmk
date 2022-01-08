@@ -38,6 +38,6 @@ class Kategori extends Model
 
     public function buku()
     {
-        return $this->belongsToMany(Buku::class, 'buku_kategories')->withTimestamps();
+        return $this->hasOne(Buku::class);
     }
 }

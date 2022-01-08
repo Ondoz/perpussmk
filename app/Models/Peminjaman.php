@@ -24,6 +24,14 @@ class Peminjaman extends Model
         'is_status'
     ];
 
+    protected $appends = [
+        'span_status'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -65,11 +73,12 @@ class Peminjaman extends Model
                 break;
             case "pending":
                 if ($date_now >= $date_confirmation) {
-                    $peminjaman = Peminjaman::find($this->attributes['id'])->first();
+                    $peminjaman = Peminjaman::find($this->attributes['id']);
                     $peminjaman->update(['is_status' => 'canceled']);
                     return '<span class="badge badge-light-danger fs-8 fw-bolder">Expired</span>';
+                } else {
+                    return '<span class="badge badge-light-warning fs-8 fw-bolder">Pending</span>';
                 }
-                return '<span class="badge badge-light-warning fs-8 fw-bolder">Pending</span>';
                 break;
         }
     }

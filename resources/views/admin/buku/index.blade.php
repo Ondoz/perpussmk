@@ -50,7 +50,7 @@
                         <div class="card-body p-0 mb-10">
                             <div class="row px-4 my-6 align-items-center">
                                 <div class="col-8">
-                                    <div class=""><b>{{$item->title}}</b></div>
+                                    <div class=""><b>{{Str::limit($item->judul, 20)}}</b></div>
                                 </div>
                                 <div class="col-4">
                                     <div class="">
@@ -91,16 +91,7 @@
                         </div>
                         <div class="card-footer">
                             <span class="text-gray-600 fs-8">Kategori : </span>
-                            @foreach ($item->kategori as $value)
-                            <a href="#" class="text-gray-600 fs-8">{{$value->name}} </a>
-                            @if($loop->last)
-                            .
-                            @elseif($loop->remaining == 1)
-                            &nbsp;&amp;&nbsp;
-                                @elseif(!$loop->first)
-                                    ,&nbsp;
-                                @endif
-                            @endforeach
+                            <a href="#" class="text-gray-600 fs-8">{{$item->kategori->name ?? 'Kosong' }} </a>
                         </div>
                     </div>
                 </div>
@@ -126,304 +117,17 @@
                     <!--end::Illustration-->
                 </div>
             @endforelse
+            {{$buku->links('vendor.pagination.bootstrap-4')}}
         </div>
 
-        <!--begin::Modals-->
+
         <!--begin::Modal - Customers - Add-->
-        <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
-            <!--begin::Modal dialog-->
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <!--begin::Modal content-->
-                <div class="modal-content">
-                    <!--begin::Form-->
-                    <form class="form" action="{{route('admin.buku.store')}}" id="kt_modal_add_customer_form" enctype="multipart/form-data" method="post">
-                        @csrf
-                        <!--begin::Modal header-->
-                        <div class="modal-header" id="kt_modal_add_customer_header">
-                            <!--begin::Modal title-->
-                            <h2 class="fw-bolder">Add Buku</h2>
-                            <!--end::Modal title-->
-                            <!--begin::Close-->
-                            <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                <span class="svg-icon svg-icon-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </div>
-                            <!--end::Close-->
-                        </div>
-                        <!--end::Modal header-->
-                        <!--begin::Modal body-->
-                        <div class="modal-body py-10 px-lg-17">
-                            <!--begin::Scroll-->
-                            <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Title</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" placeholder="" name="title" placeholder="Title" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Description</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" placeholder="" name="description" placeholder="Description" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="d-flex flex-column mb-7 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">Kategori</span>
-                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Kategori"></i>
-                                    </label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select aria-label="Select a Kategori" data-control="select2" data-placeholder="Select Kategori" data-dropdown-parent="#kt_modal_add_customer" class="form-select form-select-solid" multiple="multiple" name="kategori[]">
-                                        @foreach ($kategori as $item)
-                                            <option value="{{$item->id}}">{{$item->name}}</option>
-                                       @endforeach
-                                    </select>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Number Of Book</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid" placeholder="" name="jumlah_buku" placeholder="Description" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class=" mb-7 fv-row text-center">
-                                    <!--begin::Image input-->
-                                    <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url(/assets/admin/media/avatars/blank.png)">
-                                        <!--begin::Image preview wrapper-->
-                                        <div class="image-input-wrapper w-125px h-125px"></div>
-                                        <!--end::Image preview wrapper-->
-
-                                        <!--begin::Edit button-->
-                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                           data-kt-image-input-action="change"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-dismiss="click"
-                                           title="Change avatar">
-                                            <i class="bi bi-pencil-fill fs-7"></i>
-
-                                            <!--begin::Inputs-->
-                                            <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-
-                                            <!--end::Inputs-->
-                                        </label>
-                                        <!--end::Edit button-->
-
-                                        <!--begin::Cancel button-->
-                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                           data-kt-image-input-action="cancel"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-dismiss="click"
-                                           title="Cancel avatar">
-                                            <i class="bi bi-x fs-2"></i>
-                                        </span>
-                                        <!--end::Cancel button-->
-
-                                         <!--begin::Remove button-->
-                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                         data-kt-image-input-action="remove"
-                                         data-bs-toggle="tooltip"
-                                         data-bs-dismiss="click"
-                                         title="Remove avatar">
-                                         <i class="bi bi-x fs-2"></i>
-                                     </span>
-                                    </div>
-                                    <!--end::Image input-->
-                                </div>
-                            </div>
-                            <!--end::Scroll-->
-                        </div>
-                        <!--end::Modal body-->
-                        <!--begin::Modal footer-->
-                        <div class="modal-footer flex-center">
-                            <!--begin::Button-->
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <!--end::Button-->
-                            <!--begin::Button-->
-                            <button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                            <!--end::Button-->
-                        </div>
-                        <!--end::Modal footer-->
-                    </form>
-                    <!--end::Form-->
-                </div>
-            </div>
-        </div>
+        @include('admin.buku.create')
         <!--end::Modal - Customers - Add-->
-        <!--end::Modals-->
+
 
         <!--begin::Modal - Kategori - Edit-->
-        <div class="modal fade" id="kt_modal_edit_customer" tabindex="-1" aria-hidden="true">
-            <!--begin::Modal dialog-->
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <!--begin::Modal content-->
-                <div class="modal-content">
-                    <!--begin::Form-->
-                     <!--begin::Form-->
-                     <form class="form" action="#" id="form-edit" enctype="multipart/form-data" method="post">
-                        {{method_field('PUT')}}
-                        @csrf
-                        <input type="hidden" name="uuid" id="uuid" value="">
-                        <!--begin::Modal header-->
-                        <div class="modal-header" id="kt_modal_add_buku_header">
-                            <!--begin::Modal title-->
-                            <h2 class="fw-bolder">Edit Buku</h2>
-                            <!--end::Modal title-->
-                            <!--begin::Close-->
-                            <div id="kt_modal_add_buku_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                <span class="svg-icon svg-icon-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </div>
-                            <!--end::Close-->
-                        </div>
-                        <!--end::Modal header-->
-                        <!--begin::Modal body-->
-                        <div class="modal-body py-10 px-lg-17">
-                            <!--begin::Scroll-->
-                            <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_buku_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_buku_header" data-kt-scroll-wrappers="#kt_modal_edit_buku_scroll" data-kt-scroll-offset="300px">
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Title</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" placeholder="" id="title" name="title" placeholder="Title" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Description</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" placeholder="" id="description" name="description" placeholder="Description" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="d-flex flex-column mb-7 fv-row">
-                                    <!--begin::Label-->
-                                     <div class="d-flex flex-column mb-7 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">Kategori</span>
-                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Kategori"></i>
-                                    </label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select aria-label="Select a Kategori" data-control="select2" data-placeholder="Select Kategori" data-dropdown-parent="#kt_modal_edit_customer" class="form-select form-select-solid kategori" multiple="multiple" name="kategori[]">
-                                        @foreach ($kategori as $item)
-                                            <option value="{{$item->id}}" >{{$item->name}}</option>
-                                       @endforeach
-                                    </select>
-                                    <!--end::Input-->
-                                </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="fv-row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Number Of Book</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid" placeholder="" id="jumlah_buku" name="jumlah_buku" placeholder="Description" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class=" mb-7 fv-row text-center">
-                                    <!--begin::Image input-->
-                                    <div class="image-input image-input-empty" data-kt-image-input="true" style="background-image: url(/assets/admin/media/avatars/blank.png)">
-                                        <!--begin::Image preview wrapper-->
-                                        <div class="image-input-wrapper w-125px h-125px"></div>
-                                        <!--end::Image preview wrapper-->
-
-                                        <!--begin::Edit button-->
-                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                           data-kt-image-input-action="change"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-dismiss="click"
-                                           title="Change avatar">
-                                            <i class="bi bi-pencil-fill fs-7"></i>
-
-                                            <!--begin::Inputs-->
-                                            <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-
-                                            <!--end::Inputs-->
-                                        </label>
-                                        <!--end::Edit button-->
-
-                                        <!--begin::Cancel button-->
-                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                           data-kt-image-input-action="cancel"
-                                           data-bs-toggle="tooltip"
-                                           data-bs-dismiss="click"
-                                           title="Cancel avatar">
-                                            <i class="bi bi-x fs-2"></i>
-                                        </span>
-                                        <!--end::Cancel button-->
-
-                                         <!--begin::Remove button-->
-                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
-                                         data-kt-image-input-action="remove"
-                                         data-bs-toggle="tooltip"
-                                         data-bs-dismiss="click"
-                                         title="Remove avatar">
-                                         <i class="bi bi-x fs-2"></i>
-                                     </span>
-                                    </div>
-                                    <!--end::Image input-->
-                                </div>
-                            </div>
-                            <!--end::Scroll-->
-                        </div>
-                        <!--end::Modal body-->
-                        <!--begin::Modal footer-->
-                        <div class="modal-footer flex-center">
-                            <!--begin::Button-->
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <!--end::Button-->
-                            <!--begin::Button-->
-                            <button type="submit" id="kt_modal_delete_buku_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                            <!--end::Button-->
-                        </div>
-                        <!--end::Modal footer-->
-                    </form>
-                    <!--end::Form-->
-                    <!--end::Form-->
-                </div>
-            </div>
-        </div>
+        @include('admin.buku.edit')
         <!--end::Modal - Kategori - Edit-->
 
         <!--begin::Modal - Kategori - Delete-->
@@ -461,6 +165,9 @@
 @endsection
 @push('js')
 <script>
+    $('#kt_modal_edit_customer').on('hidden.bs.modal', function () {
+        $('#kt_modal_edit_customer form')[0].reset();
+    });
 
     var id_kategori = [];
     $(document).on('click', '.edit', function(){
@@ -471,16 +178,18 @@
             dataType: "JSON",
             type: "GET",
             success: function(result){
+                $("#judul").val(result.judul);
+                $("#penulis").val(result.penulis);
+                $("#kategori").val(result.kategori_id).change();
+                $("#tgl_rilis").val(result.detail_buku.tgl_rilis);
+                $("#bahasa").val(result.detail_buku.bahasa);
+                $("#negara").val(result.detail_buku.negara);
+                $("#jumlah_halaman").val(result.detail_buku.jumlah_halaman);
+                $("#jumlah_buku").val(result.detail_buku.jumlah_buku);
+                $("#penerbit").val(result.detail_buku.penerbit);
+                $("#description").val(result.detail_buku.description);
+                $("#image").val(result.image);
                 $('#uuid').val(result.uuid);
-                $("#title").val(result.title);
-                $('#description').val(result.description)
-                $('#jumlah_buku').val(result.jumlah_buku)
-                if (result.kategori != null) {
-                    $.each(result.kategori, function (k, v) {
-                        id_kategori[k] = v.id;
-                    });
-                }
-                $('.kategori').val(id_kategori).change();
             },
         });
     });

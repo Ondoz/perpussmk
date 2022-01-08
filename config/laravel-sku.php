@@ -15,13 +15,13 @@ return [
          * SKU is based on a specific field of a model
          *
          */
-        'source' => 'name',
+        'source' => 'judul',
 
         /*
          * Destination model field name
          *
          */
-        'field' => 'sku',
+        'field' => 'code',
 
         /*
          * SKU separator

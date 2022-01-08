@@ -12,6 +12,7 @@ use Spatie\Sluggable\SlugOptions;
 use BinaryCats\Sku\HasSku;
 use BinaryCats\Sku\Concerns\SkuOptions;
 use Carbon\Carbon;
+use Faker\Factory;
 
 class Buku extends Model implements HasMedia
 {
@@ -20,10 +21,10 @@ class Buku extends Model implements HasMedia
     protected $fillable = [
         'code',
         'uuid',
-        'title',
-        'description',
+        'judul',
         'slug',
-        'jumlah_buku',
+        'penulis',
+        'kategori_id'
     ];
 
     /**
@@ -32,7 +33,7 @@ class Buku extends Model implements HasMedia
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
+            ->generateSlugsFrom('judul')
             ->saveSlugsTo('slug');
     }
     /**
@@ -43,7 +44,7 @@ class Buku extends Model implements HasMedia
     public function skuOptions(): SkuOptions
     {
         return SkuOptions::make()
-            ->from(['title'])
+            ->from('buku.judul')
             ->target('code')
             ->using('_')
             ->forceUnique(false)
@@ -51,26 +52,33 @@ class Buku extends Model implements HasMedia
             ->refreshOnUpdate(false);
     }
 
+
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($q) {
+            $faker = Factory::create();
             $q->uuid = Uuid::uuid4();
+            $q->code = $faker->unique()->ean8();
         });
+    }
+
+    public function detail_buku()
+    {
+        return $this->hasOne(DetailBuku::class);
     }
 
     public function getImageAttribute()
     {
-        $media = $this->getMedia('book');
+        $media = $this->getMedia('default');
         if ($media->count() > 0) {
             $firstMedia = $media->first();
             $key = 'image_' . $firstMedia->uuid;
-            return cache()->rememberForever($key, function () use ($firstMedia) {
-                return $firstMedia->getFullUrl();
-            });
+            return $firstMedia->getFullUrl();
+            // return cache()->rememberForever($key, function () use ($firstMedia) {
+            // });
         } else {
-            return 'https://ui-avatars.com/api/?name=' . urlencode($this->attributes['title']);
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->attributes['judul']);
         }
     }
 
@@ -86,7 +94,7 @@ class Buku extends Model implements HasMedia
 
     public function kategori()
     {
-        return $this->belongsToMany(Kategori::class, 'buku_kategories')->withTimestamps();
+        return $this->belongsTo(Kategori::class);
     }
 
     public function peminjamanitem()

@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::orderByDesc('id')->get();
+        $peminjaman = Peminjaman::orderByDesc('id')->with('user')->get();
         return view('admin.peminjaman.index', compact('peminjaman'));
     }
 
