@@ -101,4 +101,9 @@ class Buku extends Model implements HasMedia
     {
         return $this->hasMany(PeminjamanItem::class);
     }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
