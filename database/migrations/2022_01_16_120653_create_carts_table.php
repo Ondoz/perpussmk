@@ -21,7 +21,7 @@ class CreateCartsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('buku_id')->references('id')->on('buku');
+            $table->foreign('buku_id')->references('id')->on('bukus');
         });
     }
 

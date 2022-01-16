@@ -186,7 +186,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="d-flex">
-                                                    <a href="#" class="btn btn-icon btn-primary">
+                                                    <a href="{{route('cart.add', $item->uuid)}}" class="btn btn-icon btn-primary">
                                                         <span class="svg-icon svg-icon-1">
                                                             <i class="bi bi-cart2 fs-2"></i>
                                                         </span>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/test', [TestController::class, 'index']);
 
 Auth::routes();
+
+
+Route::get('/cart/{uuid}', [CartController::class, 'store'])->name('cart.add');
