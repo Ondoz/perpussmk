@@ -229,7 +229,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helpers' => App\Helpers\GeneralHelper::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+
+        // Helpers
+        'GeneralHelper' => App\Helpers\GeneralHelper::class
 
     ],
 

@@ -22,5 +22,5 @@ Route::get('/test', [TestController::class, 'index']);
 
 Auth::routes();
 
-
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/{uuid}', [CartController::class, 'store'])->name('cart.add');

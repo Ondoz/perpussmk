@@ -17,9 +17,9 @@ class CreateBukusTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('uuid');
-            $table->text('judul');
+            $table->text('judul')->nullable();
             $table->text('slug');
-            $table->text('penulis');
+            $table->text('penulis')->nullable();
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->timestamps();
             $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');

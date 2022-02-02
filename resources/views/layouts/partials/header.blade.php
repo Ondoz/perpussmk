@@ -51,37 +51,60 @@
                     <span class="svg-icon svg-icon-1 svg-icon-white text-white">
                         <i class="bi bi-bag-fill text-white fs-2"></i>
                     </span>
-                    <span class="bullet bullet-dot bg-success h-15px w-15px position-absolute translate-middle top-0 start-100 text-white"><span style="font-size: 10px; display:block">1</span></span>
+                    <span class="bullet bullet-dot bg-success h-15px w-15px position-absolute translate-middle top-0 start-100 text-white"><span style="font-size: 10px; display:block">{{GeneralHelper::getCountCart()}}</span></span>
                 </a>
                 <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" style="">
                     <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url({{asset('assets/admin/media/misc/pattern-1.jpg')}})">
-                        <h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
-                        <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
-                        <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
-                            <li class="nav-item">
-                                <a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active" data-bs-toggle="tab" href="#kt_topbar_notifications_2">Updates</a>
-                            </li>
-                        </ul>
+                        <h3 class="text-white fw-bold px-9 mt-10 mb-6">Cart Peminjaman
+                        <span class="fs-8 opacity-75 ps-3"></span></h3>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="kt_topbar_notifications_2" role="tabpanel">
-                            <div class="d-flex flex-column px-9">
-                                <div class="pt-10 pb-0">
-                                    <h3 class="text-dark text-center fw-bolder">Get Pro Access</h3>
-                                    <div class="text-center text-gray-600 fw-bold pt-1">Outlines keep you honest. They stoping you from amazing poorly about drive</div>
-                                    <div class="text-center mt-5 mb-9">
-                                        <a href="#" class="btn btn-sm btn-primary px-6" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Upgrade</a>
-                                    </div>
+
+                        <div class="tab-pane fade active show" id="kt_topbar_notifications_1" role="tabpanel">
+                            <div class="scroll-y mh-325px my-5 px-8">
+                                <div class="d-flex flex-stack">
+                                    <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                                        <thead>
+                                            <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
+                                                <th class="ps-0 w-50px">ITEM</th>
+                                                <th class="min-w-140px"></th>
+                                                <th class="text-end min-w-140px">QTY</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (GeneralHelper::getCart() as $item)
+                                            <tr>
+                                                <td>
+                                                    <img src="{{$item->buku->image}}" class="w-50px ms-n1" alt="">
+                                                </td>
+                                                <td class="ps-0">
+                                                    <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">{{$item->buku->judul}}</a>
+                                                    <span class="text-gray-400 fw-bold fs-7 d-block text-start ps-0">Item Code: {{$item->buku->code}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">{{$item->total}}</span>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
                                 </div>
-                                <div class="text-center px-4">
-                                    <img class="mw-100 mh-200px" alt="image" src="/metronic8/demo9/assets/media/illustrations/sigma-1/1.png">
-                                </div>
+                            </div>
+                            <div class="py-3 text-center border-top">
+                                <a href="/metronic8/demo9/../demo9/dark/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary"> Check Out Peminjaman
+                                <span class="svg-icon svg-icon-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
+                                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
+                                    </svg>
+                                </span>
+                            </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-			<!--begin::Action-->
             @guest
                 <a class="nav-link btn btn-light-primary me-3" href="{{ route('login') }}">{{ __('Login') }}</a>
 

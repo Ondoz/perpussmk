@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\Cart;
+use App\Models\User;
+
 class GeneralHelper
 {
     public static function menuActive($url)
@@ -19,5 +22,24 @@ class GeneralHelper
         } elseif (!$loop->first) {
             return ',';
         }
+    }
+
+    public function getCart()
+    {
+        $cart = Cart::where('user_id', Auth()->user()->id)
+            ->with(['buku' => function ($q) {
+                $q->with('media');
+            }])
+            ->selectRaw('buku_id, count(*) as total')
+            ->groupBy('buku_id')
+            ->get();
+        return $cart;
+    }
+
+    public function getCountCart()
+    {
+        $cart = Cart::where('user_id', Auth()->user()->id)->groupBy('buku_id')
+            ->get()->count();
+        return $cart;
     }
 }
