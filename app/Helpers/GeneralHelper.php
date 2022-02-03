@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Cart;
 use App\Models\User;
+use Auth;
 
 class GeneralHelper
 {
@@ -26,7 +27,14 @@ class GeneralHelper
 
     public function getCart()
     {
-        $cart = Cart::where('user_id', Auth()->user()->id)
+        if (Auth::check()) {
+            $user = Auth::User()->id;
+        } else {
+            $user = null;
+        }
+
+
+        $cart = Cart::where('user_id', $user)
             ->with(['buku' => function ($q) {
                 $q->with('media');
             }])
@@ -38,8 +46,12 @@ class GeneralHelper
 
     public function getCountCart()
     {
-        $cart = Cart::where('user_id', Auth()->user()->id)->groupBy('buku_id')
-            ->get()->count();
-        return $cart;
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', Auth()->user()->id)->groupBy('buku_id')
+                ->get()->count();
+            return $cart;
+        } else {
+            return '0';
+        }
     }
 }

@@ -24,3 +24,5 @@ Auth::routes();
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/{uuid}', [CartController::class, 'store'])->name('cart.add');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/checkout-finish/{uuid}', [CartController::class, 'checkoutfinish'])->name('cart.finish');

@@ -65,14 +65,16 @@
                                 <div class="d-flex flex-stack">
                                     <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
                                         <thead>
-                                            <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
-                                                <th class="ps-0 w-50px">ITEM</th>
-                                                <th class="min-w-140px"></th>
-                                                <th class="text-end min-w-140px">QTY</th>
-                                            </tr>
+                                            @if (GeneralHelper::getCountCart() > 0)
+                                                <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
+                                                    <th class="ps-0 w-50px">ITEM</th>
+                                                    <th class="min-w-140px"></th>
+                                                    <th class="text-end min-w-140px">QTY</th>
+                                                </tr>
+                                            @endif
                                         </thead>
                                         <tbody>
-                                            @foreach (GeneralHelper::getCart() as $item)
+                                            @forelse (GeneralHelper::getCart() as $item)
                                             <tr>
                                                 <td>
                                                     <img src="{{$item->buku->image}}" class="w-50px ms-n1" alt="">
@@ -85,22 +87,30 @@
                                                     <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">{{$item->total}}</span>
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                            @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                   <strong><h3>Empty</h3></strong>
+                                                </td>
+                                            </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
 
                                 </div>
                             </div>
+                            @if (GeneralHelper::getCountCart() > 0)
                             <div class="py-3 text-center border-top">
-                                <a href="/metronic8/demo9/../demo9/dark/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary"> Check Out Peminjaman
-                                <span class="svg-icon svg-icon-5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                                    </svg>
-                                </span>
-                            </a>
+                                <a href="{{route('cart.index')}}" class="btn btn-color-gray-600 btn-active-color-primary"> Check Out Peminjaman
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
+                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                </a>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

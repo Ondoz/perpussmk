@@ -14,7 +14,8 @@ class PeminjamanItem extends Model
         'uuid',
         'peminjaman_id',
         'buku_id',
-        'is_status'
+        'is_status',
+        'qty'
     ];
 
     protected static function boot()
