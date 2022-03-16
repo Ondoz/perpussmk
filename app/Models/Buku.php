@@ -27,6 +27,10 @@ class Buku extends Model implements HasMedia
         'kategori_id'
     ];
 
+    protected $appends = [
+        'image'
+    ];
+
     /**
      * Get the options for generating the slug.
      */

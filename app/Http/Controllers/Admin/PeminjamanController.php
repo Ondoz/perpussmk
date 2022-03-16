@@ -24,6 +24,40 @@ class PeminjamanController extends Controller
         return back();
     }
 
+    public function get_code_manual(Request $request)
+    {
+
+        // return $request;
+        $peminjaman = Peminjaman::where('is_code', $request->code)->first();
+        if ($peminjaman) {
+            $update = $peminjaman->update([
+                'date_start' => Carbon::now()->toDateString(),
+                'date_end' =>   Carbon::now()->addDay(7)->toDateString(),
+                'is_status' => 'success'
+            ]);
+
+            if ($update) {
+                $response = [
+                    'success' => true,
+                    'url' => route('admin.peminjaman.index')
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'url' => null,
+                    'message' => 'Kode Tidak Di Temukan'
+                ];
+            }
+        } else {
+            $response = [
+                'success' => false,
+                'url' => null,
+                'message' => 'Kode Tidak Di Temukan'
+            ];
+        }
+        return $response;
+    }
+
     public function show($code)
     {
         $peminjaman = Peminjaman::where('is_code', $code)->FirstOrFail();

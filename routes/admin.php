@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\{
     BukuController,
     KategoriController,
     PeminjamanController,
+    PengembalianController,
     UserController
 };
 use App\Models\Peminjaman;
@@ -23,7 +24,14 @@ Route::resource('buku', BukuController::class)->except([
 
 Route::group(['prefix' => 'peminjaman', 'as' => 'peminjaman.'], function () {
     Route::get('/', [PeminjamanController::class, 'index'])->name('index');
-    Route::get('/scan/{code}', [PeminjamanController::class, 'show'])->name('show');
+    Route::post('/', [PeminjamanController::class, 'get_code_manual'])->name('input_manual');
+    Route::get('/{id}', [PeminjamanController::class, 'show'])->name('show');
+});
+
+Route::group(['prefix' => 'pengembalian', 'as' => 'pengembalian.'], function () {
+    Route::get('/', [PengembalianController::class, 'index'])->name('index');
+    Route::get('/{id}/edit', [PengembalianController::class, 'edit'])->name('edit');
+    Route::post('/status-item', [PengembalianController::class, 'statusItemUpdate'])->name('update_status_item');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

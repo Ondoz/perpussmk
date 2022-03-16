@@ -54,6 +54,7 @@ class PeminjamanTest extends Command
             for ($a = 0; $a < 3; $a++) {
                 $peminjaman->peminjamanitem()->create([
                     'buku_id' => $faker->unique()->numberBetween(27, 41),
+                    'qty' => 1,
                     'is_status' => 'false'
                 ]);
             }

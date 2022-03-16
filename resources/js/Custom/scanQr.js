@@ -39,28 +39,28 @@ $('.switchToScan').click(function () {
 $('.submitManual').click(function () {
     var $code = $('#code').val();
     if ($code === '') {
-        alert('The code was empty');
+        alert('Code Tidak Boleh Kosong');
         return false;
-    }
-
-    $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
-    $.ajax({
-        type: "POST",
-        url: scriptUrl + "/scratch/validation",
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            code: $code
-        },
-        dataType: "JSON",
-        success: function (e) {
-            if (e.success) {
-                location.href = e.url;
-            } else {
-                alert(e.message);
-                $('.submitManual').html('Submit');
+    } else {
+        // $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+        $.ajax({
+            type: "POST",
+            url: ajaxUrlAdmin + "peminjaman",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                code: $code
+            },
+            dataType: "JSON",
+            success: function (e) {
+                if (e.success) {
+                    location.href = e.url;
+                } else {
+                    alert(e.message);
+                    $('.submitManual').html('Submit');
+                }
             }
-        }
-    });
+        });
+    }
 });
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('reader') });
