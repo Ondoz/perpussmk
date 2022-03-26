@@ -205,6 +205,7 @@
 
         $(document).on('click', '.vdetails', function() {
             id = $(this).attr('data-id')
+            $('.item-details tr').remove();
             $.ajax({
                 url: ajaxUrlAdmin + 'pengembalian/' + id + '/edit',
                 dataType: "JSON",
