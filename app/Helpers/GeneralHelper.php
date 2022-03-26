@@ -81,7 +81,7 @@ class GeneralHelper
         }
     }
 
-    public function settingPerpustakan($key)
+    public static function settingPerpustakan($key)
     {
         $setting = Setting::where('key', $key)->first();
         if ($setting) {

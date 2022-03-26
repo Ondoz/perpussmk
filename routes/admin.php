@@ -41,4 +41,5 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
 Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
     Route::get('/', [SettingController::class, 'index'])->name('index');
+    Route::post('/', [SettingController::class, 'update'])->name('update');
 });
