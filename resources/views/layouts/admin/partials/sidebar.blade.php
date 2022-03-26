@@ -94,7 +94,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('admin.peminjaman.index') }}">
+                            <a class="menu-link" href="{{ route('admin.pengembalian.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -102,7 +102,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('admin.pengaturan.index') }}">
+                            <a class="menu-link" href="{{ route('admin.setting.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

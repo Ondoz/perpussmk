@@ -31,7 +31,9 @@ class DatabaseSeeder extends Seeder
         //     foreach ($kategori as $kat) {
         //         $buku->kategori()->attach($kat);
         //         $this->call(UsersTableSeeder::class);
-        //     }
+        //         $this->call(RolesTableSeeder::class);
+        $this->call(ModelHasRolesTableSeeder::class);
+    }
         // }
     }
 }

@@ -5,7 +5,8 @@ use App\Http\Controllers\Admin\{
     KategoriController,
     PeminjamanController,
     PengembalianController,
-    UserController
+    UserController,
+    SettingController
 };
 use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,6 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
 });
 
-// Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
-//     Route::get('/', [SettingController::class, 'index'])->name('index');
-// });
+Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
+    Route::get('/', [SettingController::class, 'index'])->name('index');
+});
