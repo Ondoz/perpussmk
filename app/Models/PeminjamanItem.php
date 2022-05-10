@@ -16,7 +16,8 @@ class PeminjamanItem extends Model
         'peminjaman_id',
         'buku_id',
         'is_status',
-        'qty'
+        'qty',
+        'keterangan_status'
     ];
 
     protected static function boot()
@@ -35,5 +36,10 @@ class PeminjamanItem extends Model
     public function buku()
     {
         return $this->belongsTo(Buku::class);
+    }
+
+    public function pengembalian_item()
+    {
+        return $this->hasMany(PengembalianItem::class);
     }
 }

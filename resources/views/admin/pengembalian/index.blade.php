@@ -101,10 +101,15 @@
                                         @endif
                                         {!! $item->span_status_item !!}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <button type="button" data-id="{{ $item->uuid }}"
                                             class="btn btn-primary btn-sm vdetails" data-bs-toggle="modal"
                                             data-bs-target="#actionModal">Details View</button>
+                                    </td> --}}
+
+                                    <td>
+                                        <a href="{{ route('admin.pengembalian.edit', $item->uuid) }}"
+                                            class="btn btn-primary btn-sm vdetails">Details Pengembalian</a>
                                     </td>
                                     <!--end::Email=-->
                                 </tr>
@@ -144,60 +149,13 @@
 
             <!--begin::Modals-->
             <!-- Modal -->
-            <div class="modal fade" id="actionModal" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Details View</h5>
-                            <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary"
-                                data-bs-dismiss="modal" aria-label="Close">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                <span class="svg-icon svg-icon-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                            transform="rotate(-45 6 17.3137)" fill="black" />
-                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                            transform="rotate(45 7.41422 6)" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </div>
-                        </div>
-                        <div class="modal-body">
 
-                            <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                <!--begin::Table head-->
-                                <thead>
-                                    <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
-                                        <th class="ps-0 w-50px">ITEM</th>
-                                        <th class="min-w-140px"></th>
-                                        <th class="text-end min-w-140px">QTY</th>
-                                        <th class="pe-0 text-end min-w-120px">ACTION</th>
-                                    </tr>
-                                </thead>
-                                <!--end::Table head-->
-                                <!--begin::Table body-->
-                                <tbody class="item-details">
-                                </tbody>
-                                <!--end::Table body-->
-                            </table>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" id="cancel"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary font-weight-bold" id="ok">Ok</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!--end::Container-->
     </div>
 @endsection
 @push('js')
-    <script>
+    {{-- <script>
         $('#ok').click(function() {
             location.reload();
         });
@@ -240,6 +198,14 @@
                 <td>
                     <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">` + v.qty + `</span>
                 </td>
+                <td>
+                    <select class="form-select" aria-label="Select example">
+                        <option>Open this select keterangan</option>
+                        <option value="tepat_waktu">Tepat Waktu</option>
+                        <option value="terlambat">Terlambat</option>
+                        <option value="rusak_or_hilang">Rusak atau Hilang</option>
+                    </select>
+                </td>
                 <td class="text-end pe-0">
                     <div class="form-check form-check-custom form-check-solid form-switch mb-2"
                         style="display:block !important">
@@ -276,5 +242,5 @@
             })
 
         }
-    </script>
+    </script> --}}
 @endpush

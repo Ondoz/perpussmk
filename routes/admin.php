@@ -32,7 +32,9 @@ Route::group(['prefix' => 'peminjaman', 'as' => 'peminjaman.'], function () {
 Route::group(['prefix' => 'pengembalian', 'as' => 'pengembalian.'], function () {
     Route::get('/', [PengembalianController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [PengembalianController::class, 'edit'])->name('edit');
+    Route::get('/item/{id}',  [PengembalianController::class, 'editItem'])->name('edit');
     Route::post('/status-item', [PengembalianController::class, 'statusItemUpdate'])->name('update_status_item');
+    Route::post('/pengembalian-item-store', [PengembalianController::class, 'storePengembalian'])->name('pengebalian-item-store');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

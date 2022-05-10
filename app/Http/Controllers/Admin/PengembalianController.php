@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanItem;
@@ -27,8 +28,24 @@ class PengembalianController extends Controller
 
     public function edit($id)
     {
-        $peminjaman = Peminjaman::where('uuid', $id)->with(['user', 'peminjamanitem.buku.media'])->get();
-        return $peminjaman;
+        $peminjaman = Peminjaman::where('uuid', $id)->with(['user', 'peminjamanitem.buku.media'])->firstorfail();
+        $cDate =  Carbon::parse($peminjaman->date_end);
+        $delay = $cDate->diffInDays();
+
+        if ($delay > 0) {
+            $denda = GeneralHelper::settingPerpustakan('denda_harian') * $delay;
+        } else {
+            $denda = 0;
+        }
+
+        $rusak = GeneralHelper::settingPerpustakan('denda_kerusakan');
+        return view('admin.pengembalian.details', compact('peminjaman', 'denda', 'rusak'));
+    }
+
+    public function editItem($id)
+    {
+        $itemPeminjaman = PeminjamanItem::where('uuid', $id)->firstorfail();
+        return $itemPeminjaman;
     }
 
     public function statusItemUpdate(Request $request)
@@ -37,11 +54,28 @@ class PengembalianController extends Controller
 
         if ($item) {
             $item->update([
-                'is_status' => $request->value
+                'is_status' => $request->value,
+                'ketarangan_status' => $request->ket_status
             ]);
             return true;
         } else {
             return false;
         }
+    }
+
+    public function storePengembalian(Request $request)
+    {
+        $peminjaman_item = PeminjamanItem::where('uuid', $request->peminjaman_item_id)->first();
+        if ($peminjaman_item) {
+            $peminjaman_item->pengembalian_item->create([
+                'qty' => $request->qty,
+                'keterangan_status' => $request->keterangan_status,
+                'denda' => $request->denda
+            ]);
+        } else {
+            return false;
+        }
+        // 'peminjaman_item_id',
+
     }
 }
