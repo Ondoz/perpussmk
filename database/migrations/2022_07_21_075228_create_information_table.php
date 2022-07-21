@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldQtyTable extends Migration
+class CreateInformationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddFieldQtyTable extends Migration
      */
     public function up()
     {
-        Schema::table('peminjaman_items', function (Blueprint $table) {
-            $table->integer('qty')->default(0)->after('buku_id');
+        Schema::create('information', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid');
+            $table->string('title');
+            $table->string('discription');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ class AddFieldQtyTable extends Migration
      */
     public function down()
     {
-        Schema::table('peminjaman_items', function (Blueprint $table) {
-            $table->dropColumn('qty');
-        });
+        Schema::dropIfExists('information');
     }
 }

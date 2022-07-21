@@ -19,8 +19,6 @@ class CreatePeminjamanItemsTable extends Migration
             $table->unsignedBigInteger('peminjaman_id');
             $table->unsignedBigInteger('buku_id');
             $table->integer('qty');
-            $table->enum('is_status', ['true', 'false'])->default('false');
-            $table->enum('ketarangan_status', ['tepat_waktu', 'terlambat', 'rusak_or_hilang', 'proses'])->default('proses');
             $table->timestamps();
             $table->foreign('peminjaman_id')->references('id')->on('peminjaman')->onDelete('cascade');
             $table->foreign('buku_id')->references('id')->on('bukus')->onDelete('cascade');

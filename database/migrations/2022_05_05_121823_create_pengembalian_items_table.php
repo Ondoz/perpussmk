@@ -22,7 +22,7 @@ class CreatePengembalianItemsTable extends Migration
             $table->integer('denda')->default(0);
             $table->timestamps();
 
-            $table->foreign('peminjaman_item_id')->references('id')->on('peminjaman_item');
+            $table->foreign('peminjaman_item_id')->references('id')->on('peminjaman_items');
         });
     }
 

@@ -83,61 +83,60 @@
                                         {{ $item->date_end }}
                                     </td>
                                     <td>
-                                        {{ $item->peminjamanitem_count }}
+                                        {{ $item->peminjamanitem->sum('qty') }}
                                     </td>
                                     <td>
-                                        {{ $item->status_item_count_true }}
+                                        {{ $item->peminjamanitem->sum('pengembalian_item_sum_qty') }}
                                     </td>
-                                    <td>
-                                        @if ($item->status_item_count_false)
-                                            @if ($date_now >= $item->date_end)
-                                                <span class="badge badge-light-danger fs-8 fw-bolder">Expired</span>
-                                            @else
-                                                <span class="badge badge-light-danger fs-8 fw-bolder">Prosess
-                                                    Pengembalian</span>
-                                            @endif
-                                        @else
-                                            <span class="badge badge-light-success fs-8 fw-bolder">Success</span>
-                                        @endif
-                                        {!! $item->span_status_item !!}
-                                    </td>
-                                    {{-- <td>
+                                    <td class="text-gray-800 fw-bolder text-center"">
+                                                  @if ($item->peminjamanitem->sum('qty') === $item->peminjamanitem->sum('pengembalian_item_sum_qty'))
+                                        <span class="badge badge-light-success fs-8 fw-bolder">Success</span>
+                                    @else
+                                        <span class="badge badge-light-danger fs-8 fw-bolder">Prosess
+                                            Pengembalian</span>
+                                        <span>
+                                            Tersisa
+                                            {{ $item->peminjamanitem->sum('qty') - $item->peminjamanitem->sum('pengembalian_item_sum_qty') }}
+                                            Buku
+                                        </span>
+                            @endif
+                            </td>
+                            {{-- <td>
                                         <button type="button" data-id="{{ $item->uuid }}"
                                             class="btn btn-primary btn-sm vdetails" data-bs-toggle="modal"
                                             data-bs-target="#actionModal">Details View</button>
                                     </td> --}}
 
-                                    <td>
-                                        <a href="{{ route('admin.pengembalian.edit', $item->uuid) }}"
-                                            class="btn btn-primary btn-sm vdetails">Details Pengembalian</a>
-                                    </td>
-                                    <!--end::Email=-->
-                                </tr>
-                            @empty
-                                <div class="card-body p-0">
-                                    <!--begin::Wrapper-->
-                                    <div class="card-px text-center py-20 my-10">
-                                        <!--begin::Title-->
-                                        <h2 class="fs-2x fw-bolder mb-10">Welcome!</h2>
-                                        <!--end::Title-->
-                                        <!--begin::Description-->
-                                        <p class="text-gray-400 fs-4 fw-bold mb-10">There are no customers added yet.
-                                            <br />Kickstart your CRM by adding a your first customer
-                                        </p>
-                                        <!--end::Description-->
-                                        <!--begin::Action-->
-                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#kt_modal_add_customer">Add Customer</a>
-                                        <!--end::Action-->
-                                    </div>
-                                    <!--end::Wrapper-->
-                                    <!--begin::Illustration-->
-                                    <div class="text-center px-4">
-                                        <img class="mw-100 mh-300px" alt=""
-                                            src="assets/media/illustrations/sigma-1/2.png" />
-                                    </div>
-                                    <!--end::Illustration-->
+                            <td>
+                                <a href=" {{ route('admin.pengembalian.edit', $item->uuid) }}"
+                                    class="btn btn-primary btn-sm vdetails">Details Pengembalian</a>
+                            </td>
+                            <!--end::Email=-->
+                            </tr>
+                        @empty
+                            <div class="card-body p-0">
+                                <!--begin::Wrapper-->
+                                <div class="card-px text-center py-20 my-10">
+                                    <!--begin::Title-->
+                                    <h2 class="fs-2x fw-bolder mb-10">Welcome!</h2>
+                                    <!--end::Title-->
+                                    <!--begin::Description-->
+                                    <p class="text-gray-400 fs-4 fw-bold mb-10">There are no customers added yet.
+                                        <br />Kickstart your CRM by adding a your first customer
+                                    </p>
+                                    <!--end::Description-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#kt_modal_add_customer">Add Customer</a>
+                                    <!--end::Action-->
                                 </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Illustration-->
+                                <div class="text-center px-4">
+                                    <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sigma-1/2.png" />
+                                </div>
+                                <!--end::Illustration-->
+                            </div>
                             @endforelse
                         </tbody>
                         <!--end::Table body-->

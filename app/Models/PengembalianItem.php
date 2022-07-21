@@ -10,24 +10,24 @@ class PengembalianItem extends Model
 {
     use HasFactory;
 
-    protected $table = [
+    protected $fillable = [
         'uuid',
         'peminjaman_item_id',
         'qty',
-        'keterangan_status',
+        'ketarangan_status',
         'denda'
     ];
 
     protected static function boot()
     {
         parent::boot();
-        static::created(function ($q) {
+        static::creating(function ($q) {
             return $q->uuid = Uuid::uuid4();
         });
     }
 
     public function peminjaman_item()
     {
-        return $this->belongsTo(PeminjamanItem::class);
+        return $this->belong(PeminjamanItem::class);
     }
 }

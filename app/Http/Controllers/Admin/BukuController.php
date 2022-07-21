@@ -58,6 +58,7 @@ class BukuController extends Controller
 
     public function update(Request $request, $uuid)
     {
+
         $buku = Buku::where('uuid', $uuid)->firstorFail();
 
         $buku->update([

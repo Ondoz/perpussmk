@@ -24,12 +24,16 @@
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <rect x="2" y="2" width="9" height="9" rx="2"
+                                        fill="black" />
+                                    <rect opacity="0.3" x="13" y="2" width="9" height="9"
+                                        rx="2" fill="black" />
+                                    <rect opacity="0.3" x="13" y="13" width="9" height="9"
+                                        rx="2" fill="black" />
+                                    <rect opacity="0.3" x="2" y="13" width="9" height="9"
+                                        rx="2" fill="black" />
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
@@ -43,8 +47,8 @@
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/maps/map002.svg-->
                             <span class="svg-icon svg-icon-2x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
                                     <path
                                         d="M8.7 4.19995L4 6.30005V18.8999L8.7 16.8V19L3.1 21.5C2.6 21.7 2 21.4 2 20.8V6C2 5.4 2.3 4.89995 2.9 4.69995L8.7 2.09998V4.19995Z"
                                         fill="black" />
@@ -113,21 +117,24 @@
                 </div>
 
                 <div class="menu-item py-3">
-                    <a class="menu-link {{ Helpers::menuActive('/') }}" href="../../demo9/dist/index.html" title="List
-                User" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                        data-bs-placement="right">
+                    <a class="menu-link {{ Helpers::menuActive('/') }}" href="{{ route('admin.user.index') }}"
+                        title="List
+                User" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                            <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/metronic/releases/2022-07-05-142712/core/html/src/media/icons/duotune/communication/com013.svg-->
+                            <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
+                                        fill="currentColor" />
+                                    <rect opacity="0.3" x="8" y="3" width="8"
+                                        height="8" rx="4" fill="currentColor" />
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
+
                         </span>
                     </a>
                 </div>
@@ -145,9 +152,10 @@
                 data-kt-menu-placement="top-start">
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
                 <span class="svg-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)"
-                            fill="black" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <rect opacity="0.3" width="12" height="2" rx="1"
+                            transform="matrix(-1 0 0 1 15.5 11)" fill="black" />
                         <path
                             d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z"
                             fill="black" />

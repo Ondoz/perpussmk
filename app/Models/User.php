@@ -6,13 +6,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,  InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -52,9 +54,24 @@ class User extends Authenticatable
         });
     }
 
+
+    public function getAvatarAttribute()
+    {
+        $media = $this->getMedia('profile');
+        if ($media->count() > 0) {
+            $firstMedia = $media->first();
+            $key = 'featured_' . $firstMedia->uuid;
+            return cache()->rememberForever($key, function () use ($firstMedia) {
+                return $firstMedia->getFullUrl();
+            });
+        } else {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->attributes['name']);
+        }
+    }
+
     public function user_details()
     {
-        return $this->hasMany(UserDetails::class);
+        return $this->hasOne(UserDetails::class);
     }
 
     public function peminjaman()

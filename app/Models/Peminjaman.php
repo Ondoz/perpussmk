@@ -75,7 +75,7 @@ class Peminjaman extends Model
                 if ($date_now >= $date_confirmation) {
                     $peminjaman = Peminjaman::find($this->attributes['id']);
                     $peminjaman->update(['is_status' => 'canceled']);
-                    return '<span class="badge badge-light-danger fs-8 fw-bolder">Expired</span>';
+                    return '<span class="badge badge-light-danger fs-8 fw-bolder">Expired/Canceled</span>';
                 } else {
                     return '<span class="badge badge-light-warning fs-8 fw-bolder">Pending</span>';
                 }

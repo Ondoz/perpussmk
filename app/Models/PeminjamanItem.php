@@ -15,9 +15,10 @@ class PeminjamanItem extends Model
         'uuid',
         'peminjaman_id',
         'buku_id',
-        'is_status',
         'qty',
-        'keterangan_status'
+    ];
+    protected $appends = [
+        'qty_sum_pengembalian',
     ];
 
     protected static function boot()
@@ -41,5 +42,11 @@ class PeminjamanItem extends Model
     public function pengembalian_item()
     {
         return $this->hasMany(PengembalianItem::class);
+    }
+
+    public function getQtySumPengembalianAttribute()
+    {
+        $data = $this->pengembalian_item()->get();
+        return $data->sum('qty');
     }
 }

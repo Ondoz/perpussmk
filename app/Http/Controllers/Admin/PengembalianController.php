@@ -13,29 +13,29 @@ class PengembalianController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::where('is_status', 'success')->with(['user', 'peminjamanitem'])->withCount([
-            'peminjamanitem',
-            'peminjamanitem as status_item_count_false' => function ($query) {
-                $query->where('is_status', 'false');
-            },
-            'peminjamanitem as status_item_count_true' => function ($query) {
-                $query->where('is_status', 'true');
-            }
-        ])->get();
+        $peminjaman = Peminjaman::where('is_status', 'success')->with('user')->with('peminjamanitem', function ($q) {
+            $q->withSum('pengembalian_item', 'qty');
+        })->get();
         $date_now = Carbon::now()->format('Y-m-d');
+
+        // return $peminjaman;
+
         return view('admin.pengembalian.index', compact('peminjaman', 'date_now'));
     }
 
     public function edit($id)
     {
-        $peminjaman = Peminjaman::where('uuid', $id)->with(['user', 'peminjamanitem.buku.media'])->firstorfail();
+        $peminjaman = Peminjaman::where('uuid', $id)->with('user')->with('peminjamanitem', function ($q) {
+            $q->with('buku.media')->withSum('pengembalian_item', 'qty');
+        })->firstorfail();
+
         $cDate =  Carbon::parse($peminjaman->date_end);
         $delay = $cDate->diffInDays();
 
         if ($delay > 0) {
-            $denda = GeneralHelper::settingPerpustakan('denda_harian') * $delay;
+            $denda = (GeneralHelper::settingPerpustakan('denda_harian') * $delay) + GeneralHelper::settingPerpustakan('denda_harian');
         } else {
-            $denda = 0;
+            $denda = GeneralHelper::settingPerpustakan('denda_harian');
         }
 
         $rusak = GeneralHelper::settingPerpustakan('denda_kerusakan');
@@ -65,17 +65,29 @@ class PengembalianController extends Controller
 
     public function storePengembalian(Request $request)
     {
+        $countQtyRequest = array_sum($request->qty);
         $peminjaman_item = PeminjamanItem::where('uuid', $request->peminjaman_item_id)->first();
         if ($peminjaman_item) {
-            $peminjaman_item->pengembalian_item->create([
-                'qty' => $request->qty,
-                'keterangan_status' => $request->keterangan_status,
-                'denda' => $request->denda
-            ]);
+            if ($countQtyRequest !== 0) {
+                if ($peminjaman_item->qty >= $countQtyRequest) {
+                    foreach ($request->qty as $key => $value) {
+                        $peminjaman_item->pengembalian_item()->create([
+                            'qty' => $value,
+                            'ketarangan_status' => $request->ketarangan_status[$key],
+                            'denda' => $request->denda[$key]
+                        ]);
+                    }
+                    return back()->with('success', 'Berhasil Mengembalikan');
+                } else {
+                    return back()->with('error', 'Melebihi Dengan Jumlah Qty Peminjaman');
+                }
+            } else {
+                return back()->with('error', 'Tidak Sesuai Dengan Jumlah Qty Peminjaman');
+            }
         } else {
             return false;
         }
-        // 'peminjaman_item_id',
-
     }
+
+    // tambahkan edit pengembalian
 }
