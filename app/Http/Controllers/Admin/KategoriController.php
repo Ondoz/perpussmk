@@ -10,7 +10,13 @@ class KategoriController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::orderByDesc('id')->get();
+        $kategori = Kategori::orderByDesc('id')->paginate(10);
+        return view('admin.kategori.index', compact('kategori'));
+    }
+
+    public function search(Request $request)
+    {
+        $kategori = Kategori::search($request->search)->paginate(10);
         return view('admin.kategori.index', compact('kategori'));
     }
 
@@ -23,7 +29,7 @@ class KategoriController extends Controller
         $kategori =  Kategori::create([
             'name' => $request->name
         ]);
-        return back();
+        return back()->withInput();
     }
 
     public function edit($uuid)
@@ -42,7 +48,7 @@ class KategoriController extends Controller
         return back();
     }
 
-    public function destroy(Request $request,$uuid)
+    public function destroy(Request $request, $uuid)
     {
         $kategori = Kategori::where('uuid', $uuid)->FirstOrFail();
         $kategori->delete();

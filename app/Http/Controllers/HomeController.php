@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Models\Buku;
 use App\Models\PeminjamanItem;
 use App\Models\User;
@@ -15,8 +16,25 @@ class HomeController extends Controller
     public function index()
     {
         $topBook = $this->topBook(8);
-        $newBook = $this->newBook(12);
+        $newBook = GeneralHelper::newBook(12);
         return view('home', compact('topBook', 'newBook'));
+    }
+
+    public function details($uuid)
+    {
+        $buku = Buku::where('uuid', $uuid)->first();
+        return view('buku-detail', compact('buku'));
+    }
+
+
+    public function search(Request $request)
+    {
+        $buku = Buku::search($request->buku)->query(function ($builder) {
+            $builder->with('detail_buku')->with('media');
+        })->paginate(12);
+
+        return view('buku', compact('buku'));
+        // return $search;
     }
 
     public function profile()
@@ -35,15 +53,13 @@ class HomeController extends Controller
         return $ids;
     }
 
-    protected function newBook($limit = 4)
-    {
-        $book = Buku::inRandomOrder()->with('media')->take($limit)->get();
-        return $book;
-    }
+
 
     public function profileSetting(Request $request)
     {
         $user = User::where('id', auth()->user()->id)->first();
+        $user->clearMediaCollection('profile');
+
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $user->addMediaFromRequest('avatar')->toMediaCollection('profile');
         };
@@ -58,6 +74,8 @@ class HomeController extends Controller
                 'no_phone' => $request->phone
             ]);
         }
+
+        return back();
     }
 
     public function updatePassword(Request $request)

@@ -15,10 +15,10 @@
                                     Menampilkan 8 Top buku
                                 </div>
                             </div>
-                            <div class="d-flex my-4">
+                            {{-- <div class="d-flex my-4">
                                 <a href="#" class="btn btn-sm btn-primary me-6" data-bs-toggle="modal"
                                     data-bs-target="#kt_modal_offer_a_deal">Lihat Semua Top Buku</a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row g-10">
                             @foreach ($topBook as $item)
@@ -91,7 +91,7 @@
                                             </div>
                                         </a>
                                         <div class="m-0">
-                                            <a href=""
+                                            <a href="{{route('details', $item->uuid)}}"
                                                 class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">{{ Str::limit($item->judul, 20) }}</a>
                                             <div class="fw-bold fs-5 text-gray-600 text-dark mt-3 mb-5"></div>
                                             <div class="row">

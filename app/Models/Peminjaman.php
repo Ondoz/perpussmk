@@ -8,10 +8,13 @@ use Ramsey\Uuid\Uuid;
 use BinaryCats\Sku\HasSku;
 use BinaryCats\Sku\Concerns\SkuOptions;
 use Carbon\Carbon;
+use Laravel\Scout\Searchable;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Builder;
 
 class Peminjaman extends Model
 {
-    use HasFactory, HasSku;
+    use HasFactory, HasSku, Searchable;
 
     protected $table = 'peminjaman';
 
@@ -24,9 +27,10 @@ class Peminjaman extends Model
         'is_status'
     ];
 
-    protected $appends = [
-        'span_status'
-    ];
+    // protected $appends = [
+    //     // 'span_status',
+    //     'name_user'
+    // ];
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',
@@ -83,6 +87,11 @@ class Peminjaman extends Model
         }
     }
 
+    public function getNameUserAttribute()
+    {
+        return $this->user->name;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -91,5 +100,42 @@ class Peminjaman extends Model
     public function peminjamanitem()
     {
         return $this->hasMany(PeminjamanItem::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    #[SearchUsingPrefix('is_code', 'name_user')]
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = $this->transform($array, [
+            \App\Search\Transformers\CustomTransformer::class
+        ]);
+
+        $array['is_code'] = $this->is_code;
+        $array['name_user'] = $this->user->name;
+
+        return $array;
+
+        // $this->toArray();
+    }
+
+    public function getScoutModelsByIds(Builder $builder, array $ids)
+    {
+        $query = static::usesSoftDelete()
+            ? $this->withTrashed() : $this->newQuery();
+
+        if ($builder->queryCallback) {
+            call_user_func($builder->queryCallback, $query); // here
+        }
+        return $query->whereIn(
+            $this->getScoutKeyName(),
+            $ids
+        )->get();
     }
 }

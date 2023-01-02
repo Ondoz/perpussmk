@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BukuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HistroyPeminjaman;
 use App\Http\Controllers\HomeController;
@@ -19,6 +20,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/buku', [BukuController::class, 'index'])->name('buku');
+Route::get('/buku/{uuid}', [App\Http\Controllers\HomeController::class, 'details'])->name('details');
+Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
+Route::get('/information', [App\Http\Controllers\InformationController::class, 'index'])->name('information');
+
+
 
 Route::get('/test', [TestController::class, 'index']);
 

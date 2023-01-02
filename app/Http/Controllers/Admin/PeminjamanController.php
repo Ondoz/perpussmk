@@ -11,7 +11,17 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::orderByDesc('id')->with('user')->get();
+        $peminjaman = Peminjaman::orderByDesc('id')->with('user')->paginate();
+        return view('admin.peminjaman.index', compact('peminjaman'));
+    }
+
+    public function search(Request $request)
+    {
+        $peminjaman = Peminjaman::where('is_code', 'like', "%" . $request->search . "%")
+            ->orWhereHas('user', function ($query) use ($request) {
+                $query->where('name', 'like', "%" . $request->search . "%");
+            })
+            ->paginate();
         return view('admin.peminjaman.index', compact('peminjaman'));
     }
 

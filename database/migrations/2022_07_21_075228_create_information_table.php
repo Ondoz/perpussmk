@@ -17,8 +17,9 @@ class CreateInformationTable extends Migration
             $table->id();
             $table->string('uuid');
             $table->string('title');
-            $table->string('discription');
+            $table->string('descriptions');
             $table->string('slug');
+            $table->enum('is_status', ['is_draft', 'is_public']);
             $table->timestamps();
         });
     }

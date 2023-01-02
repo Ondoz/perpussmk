@@ -9,19 +9,28 @@
                 {{-- <span class="text-white fs-1">Dashboard</span> --}}
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="btn btn-color-light btn-custom  fw-bolder me-1" href="/">Home</a>
+                        <a class="btn btn-color-light {{ request()->is('/') ? 'btn-custom' : '' }} fw-bolder me-1"
+                            href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-color-light fw-bolder me-1" href="">Buku</a>
+                        <a class="btn btn-color-light {{ request()->is('buku') ? 'btn-custom' : '' }} fw-bolder me-1"
+                            href="{{ route('buku') }}">Buku</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-color-light fw-bolder me-1 " href="{{ route('history.index') }}">History
+                        <a class="btn btn-color-light {{ request()->is('history') ? 'btn-custom' : '' }} fw-bolder me-1 "
+                            href="{{ route('history.index') }}">History
                             Peminjaman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-color-light  {{ request()->is('information') ? 'btn-custom' : '' }} fw-bolder me-1 "
+                            href="{{ route('information') }}">Informasi</a>
                     </li>
                 </ul>
             </h1>
             <!--end::Heading-->
         </div>
+
+
         <!--end::Page title=-->
         <!--begin::Wrapper-->
         <div class="d-flex align-items-center flex-wrap">
@@ -30,7 +39,8 @@
                     data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter"
                     data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-permanent="true"
                     data-kt-menu-placement="bottom-start" data-kt-menu-flip="bottom" data-kt-search="true">
-                    <form data-kt-search-element="form" class="w-100 position-relative me-3" autocomplete="off">
+                    <form method="get" action="{{ route('search') }}" class="w-100 position-relative me-3"
+                        autocomplete="off">
                         <input type="hidden">
                         <span class="svg-icon svg-icon-2 search-icon position-absolute top-50 translate-middle-y ms-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -43,8 +53,8 @@
                                     fill="black"></path>
                             </svg>
                         </span>
-                        <input type="text" class="form-control custom-form-control ps-13" name="search"
-                            value="" placeholder="Find Goods" data-kt-search-element="input">
+                        <input type="text" class="form-control custom-form-control ps-13" name="buku"
+                            value="{{ old('buku') }}" placeholder="Find Goods" data-kt-search-element="input">
 
                         <span
                             class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-4"
@@ -151,6 +161,7 @@
                 </div>
             </div>
             @guest
+
                 <a class="nav-link btn btn-light-primary me-3" href="{{ route('login') }}">{{ __('Login') }}</a>
 
                 @if (Route::has('register'))
@@ -190,11 +201,14 @@
                                     </div>
                                 </div>
                                 <div class="separator my-2"></div>
+                                @role('admin')
+                                    <div class="menu-item px-5">
 
+                                        <a href="{{ route('admin.index') }}" class="menu-link px-5">Admin Dashboard</a>
+                                    </div>
+                                @endrole
                                 <div class="menu-item px-5"> <a href="{{ route('home.profile') }}"
-                                        class="menu-link px-5">My
-                                        Profile</a>
-                                </div>
+                                        class="menu-link px-5">MyProfile</a></div>
                                 <div class="menu-item px-5">
                                     <a class="" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -215,8 +229,13 @@
         </div>
         <!--end::Wrapper-->
     </div>
-
+    <div class="row">
+        <div class="col">
+            @include('layouts.flash_message')
+        </div>
+    </div>
     <!--end::Container-->
-    <div class="header-offset"></div>
+    <div class="header-offset">
+    </div>
 
 </div>

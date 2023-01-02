@@ -10,12 +10,26 @@ use Ramsey\Uuid\Uuid;
 
 class BukuController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buku = Buku::orderByDesc('id')->with(['kategori', 'media'])->paginate(12);
+        $buku = Buku::search($request->search)->query(function ($builder) {
+            $builder->with(['kategori', 'media']);
+        })->orderBy('id', 'desc')->paginate(12);
         $kategori = Kategori::all();
         return view('admin.buku.index', compact('buku', 'kategori'));
     }
+
+    public function search(Request $request)
+    {
+        $buku = buku::search($request->search)->query(function ($builder) {
+            $builder->with(['kategori', 'media']);
+        })->orderBy('id', 'desc')->paginate(12);
+
+        $kategori = Kategori::all();
+
+        return view('admin.buku.index', compact('buku', 'kategori'));
+    }
+
 
     public function store(Request $request)
     {

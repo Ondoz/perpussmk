@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ asset('assets/admin/plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('assets/admin/plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -75,6 +74,7 @@
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('assets/admin/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('assets/admin/js/custom/modals/select-location.js') }}"></script>
@@ -86,6 +86,8 @@
 
 
     <!--end::Javascript-->
+    @yield('scripts')
+
     @stack('js');
 
 </body>

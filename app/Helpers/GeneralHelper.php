@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Buku;
 use App\Models\Cart;
 use App\Models\Setting;
 use App\Models\User;
@@ -93,5 +94,11 @@ class GeneralHelper
         } else {
             return null;
         }
+    }
+
+    public static function newBook($limit = 4)
+    {
+        $book = Buku::inRandomOrder()->with('media')->take($limit)->get();
+        return $book;
     }
 }

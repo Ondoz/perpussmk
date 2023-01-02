@@ -251,7 +251,7 @@
                                 <div class="col-lg-8 fv-row">
                                     <input type="tel" name="phone"
                                         class="form-control form-control-lg form-control-solid" placeholder="Phone number"
-                                        value="{{ auth()->user()->user_details->no_phone }}" />
+                                        value="{{ auth()->user()->user_details->no_phone ?? ''}}" />
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -279,7 +279,7 @@
                                 <div class="col-lg-8 fv-row">
                                     <input type="text" name="alamat"
                                         class="form-control form-control-lg form-control-solid" placeholder=""
-                                        value="{{ auth()->user()->user_details->alamat }}" />
+                                        value="{{ auth()->user()->user_details->alamat ?? ''}}" />
                                 </div>
                                 <!--end::Col-->
                             </div>

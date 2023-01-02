@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Cart;
+use App\Models\DetailBuku;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,11 +27,16 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $buku = Buku::where('uuid', $uuid)->firstorfail();
-            $cart = $buku->cart()->create([
-                'user_id' => auth()->user()->id
-            ]);
+            if ($buku->detail_buku->jumlah_buku > 0) {
+                $cart = $buku->cart()->create([
+                    'user_id' => auth()->user()->id
+                ]);
 
-            return back();
+                return back();
+            } else {
+
+                return back()->with(['error' => 'Stock Tidak Tesedia']);
+            }
         } else {
             return redirect('login');
         }
@@ -50,6 +56,10 @@ class CartController extends Controller
                     'buku_id' => $value,
                     'qty' => $request['qty'][$key],
                     'is_status' => 'false',
+                ]);
+                $buku = DetailBuku::where('buku_id', $value)->first();
+                $buku->update([
+                    'jumlah_buku' => ($buku->jumlah_buku - $request['qty'][$key])
                 ]);
             }
         }

@@ -11,10 +11,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Scout\Searchable;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Builder;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles,  InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,  InteractsWithMedia, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -82,5 +85,35 @@ class User extends Authenticatable implements HasMedia
     public function cart()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    #[SearchUsingPrefix(['name', 'email'])]
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+        ];
+    }
+
+    public function getScoutModelsByIds(Builder $builder, array $ids)
+    {
+        $query = static::usesSoftDelete()
+            ? $this->withTrashed() : $this->newQuery();
+
+        if ($builder->queryCallback) {
+            call_user_func($builder->queryCallback, $query); // here
+        }
+
+        return $query->whereIn(
+            $this->getScoutKeyName(),
+            $ids
+        )->get();
     }
 }
