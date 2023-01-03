@@ -23,7 +23,7 @@
                                         <!--begin::Body-->
                                         <div class="mb-6">
                                             <!--begin::Title-->
-                                            <a href="#"
+                                            <a href="{{ route('information-detail', $item->id) }}"
                                                 class="fw-bold text-dark mb-4 fs-2 lh-base text-hover-primary">{{ $item->title }}</a>
                                             <!--end::Title-->
                                             <!--begin::Text-->

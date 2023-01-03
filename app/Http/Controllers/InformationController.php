@@ -13,4 +13,12 @@ class InformationController extends Controller
 
         return view('information', compact('information'));
     }
+
+
+    public function details($id)
+    {
+        $information = Information::where('id', $id)->first();
+
+        return view('information-detail', compact('information'));
+    }
 }

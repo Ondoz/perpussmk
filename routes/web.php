@@ -24,6 +24,8 @@ Route::get('/buku', [BukuController::class, 'index'])->name('buku');
 Route::get('/buku/{uuid}', [App\Http\Controllers\HomeController::class, 'details'])->name('details');
 Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 Route::get('/information', [App\Http\Controllers\InformationController::class, 'index'])->name('information');
+Route::get('/information/{id}', [App\Http\Controllers\InformationController::class, 'details'])->name('information-detail');
+
 
 
 
