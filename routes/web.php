@@ -42,5 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('/checkout-finish/{uuid}', [CartController::class, 'checkoutfinish'])->name('cart.finish');
     Route::get('/history', [HistroyPeminjaman::class, 'index'])->name('history.index');
+    Route::get('/history-pengembalian/{uuid}', [HistroyPeminjaman::class, 'pengembalianItem'])->name('history.pengembalian');
+
     Route::post('/update/status/{uuid}', [HistroyPeminjaman::class, 'updatestatus'])->name('status.update');
 });

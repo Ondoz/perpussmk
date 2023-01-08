@@ -52,6 +52,7 @@
                                 <th class="min-w-125px">Tgl Pengembalian</th>
                                 <th class="min-w-125px">jumlah pinjaman buku</th>
                                 <th class="min-w-125px">buku yang dikembalikan</th>
+                                <th class="min-w-125px">denda</th>
                                 <th class="min-w-125px">Status</th>
                                 <th class="min-w-125px">Action</th>
                             </tr>
@@ -88,6 +89,9 @@
                                     </td>
                                     <td>
                                         {{ $item->peminjamanitem->sum('pengembalian_item_sum_qty') }}
+                                    </td>
+                                    <td>
+                                        {{ $item->denda_buku }}
                                     </td>
                                     <td class="text-gray-800 fw-bolder text-center"">
                                         @if ($item->peminjamanitem->sum('qty') === $item->peminjamanitem->sum('pengembalian_item_sum_qty'))

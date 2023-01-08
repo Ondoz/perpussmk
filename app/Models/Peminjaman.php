@@ -27,10 +27,11 @@ class Peminjaman extends Model
         'is_status'
     ];
 
-    // protected $appends = [
-    //     // 'span_status',
-    //     'name_user'
-    // ];
+    protected $appends = [
+        // 'span_status',
+        // 'name_user'
+        'denda_buku'
+    ];
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',
@@ -100,6 +101,14 @@ class Peminjaman extends Model
     public function peminjamanitem()
     {
         return $this->hasMany(PeminjamanItem::class);
+    }
+
+    public function getDendaBukuAttribute()
+    {
+        foreach ($this->peminjamanitem as $key => $value) {
+            $arr = $value->pengembalian_item[0]->sum('denda');
+        }
+        return $arr;
     }
 
     /**

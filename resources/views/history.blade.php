@@ -26,6 +26,7 @@
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th class="min-w-100px">Date Added</th>
                                             <th class="min-w-175px">Is Code</th>
+                                            <th class="min-w-175px">Denda Peminjaman</th>
                                             <th class="min-w-70px">Order Status</th>
                                             <th class="min-w-100px">Action</th>
                                         </tr>
@@ -41,6 +42,9 @@
                                                 <!--begin::Comment-->
                                                 <td>{{ $item->is_code }}</td>
                                                 <!--end::Comment-->
+                                                <td>
+                                                    {{ $item->denda_buku }}
+                                                </td>
                                                 <!--begin::Status-->
                                                 <td>
                                                     {!! $item->span_status !!}
@@ -50,7 +54,12 @@
                                                 <td>
                                                     <a href="{{ route('cart.finish', ['uuid' => $item->uuid]) }}"
                                                         class="btn btn-sm btn-primary">
-                                                        Details
+                                                        Details Peminjaman
+                                                    </a>
+
+                                                    <a href="{{ route('history.pengembalian', ['uuid' => $item->uuid]) }}"
+                                                        class="btn btn-sm btn-info">
+                                                        Details Pengembalian
                                                     </a>
                                                 </td>
                                                 <!--end::Customer Notified-->
