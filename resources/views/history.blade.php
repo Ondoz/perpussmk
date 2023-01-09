@@ -56,11 +56,12 @@
                                                         class="btn btn-sm btn-primary">
                                                         Details Peminjaman
                                                     </a>
-
-                                                    <a href="{{ route('history.pengembalian', ['uuid' => $item->uuid]) }}"
-                                                        class="btn btn-sm btn-info">
-                                                        Details Pengembalian
-                                                    </a>
+                                                    @if ($item->is_status === 'success')
+                                                        <a href="{{ route('history.pengembalian', ['uuid' => $item->uuid]) }}"
+                                                            class="btn btn-sm btn-info">
+                                                            Details Pengembalian
+                                                        </a>
+                                                    @endif
                                                 </td>
                                                 <!--end::Customer Notified-->
                                             </tr>

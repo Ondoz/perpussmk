@@ -88,7 +88,7 @@
                                         {{ $item->peminjamanitem->sum('qty') }}
                                     </td>
                                     <td>
-                                        {{ $item->peminjamanitem->sum('pengembalian_item_sum_qty') }}
+                                        {{ $item->peminjamanitem()->sum('pengembalian_item_sum_qty') }}
                                     </td>
                                     <td>
                                         {{ $item->denda_buku }}

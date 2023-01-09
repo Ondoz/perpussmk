@@ -106,7 +106,11 @@ class Peminjaman extends Model
     public function getDendaBukuAttribute()
     {
         foreach ($this->peminjamanitem as $key => $value) {
-            $arr = $value->pengembalian_item[0]->sum('denda');
+            if (count($value->pengembalian_item) > 0) {
+                $arr = $value->pengembalian_item[0]->sum('denda');
+            } else {
+                $arr = '0';
+            }
         }
         return $arr;
     }
