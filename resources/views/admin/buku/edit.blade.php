@@ -173,8 +173,8 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
-                        <div class=" mb-7 fv-row text-center">
-                            <label class=" fs-6 fw-bold mb-2">Cover Buku</label>
+                        <div class="mb-7 fv-row text-center">
+                            <label class="fs-6 fw-bold mb-2">Cover Buku</label>
                         </div>
                         <div class=" mb-7 fv-row text-center">
                             <!--begin::Image input-->
