@@ -31,7 +31,8 @@
                                         DIBALIKAN</span>
                                 </div>
                                 <div class="col-1">
-                                    <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">ACCTION</span>
+
+                                    <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">ACCTION </span>
                                 </div>
                             </div>
                             {{-- </div> --}}
@@ -51,18 +52,21 @@
                                     </div>
                                     <div class="col-1" style="align-self: center;">
                                         <input type="text" disable class="form-control text-center" name="qty[]"
-                                            value="{{ $item->qty }}">
+                                            value="{{ $item->qty }}" readonly>
                                     </div>
                                     <div class="col-1" style="align-self: center;">
                                         <input type="text" disable class="form-control text-center" name="qty[]"
                                             value=" {{ $item->pengembalian_item_sum_qty }}">
                                     </div>
-                                    <div class="col-1" style="align-self: center;">
-                                        <button type="button" data-uuid="{{ $item->uuid }}"
-                                            class="btn btn-primary btn-sm vdetails kebalian_buku" data-bs-toggle="modal"
-                                            data-bs-target="#actionModal" data-id="{{ $item->id }}">Kebalikan
-                                            Buku</button>
-                                    </div>
+                                    @if ($item->pengembalian_item_sum_qty < $item->qty)
+                                        <div class="col-1" style="align-self: center;">
+                                            <button type="button" data-uuid="{{ $item->id }}"
+                                                data-id="{{ $item->uuid }}"
+                                                class="btn btn-primary btn-sm vdetails kebalian_buku" data-bs-toggle="modal"
+                                                data-bs-target="#actionModal" data-id="{{ $item->id }}">Kebalikan
+                                                Buku</button>
+                                        </div>
+                                    @endif
                                 </div>
                                 <input type="hidden" name="buku_id[]" value="{{ $item->buku_id }}">
                             </div>
@@ -80,16 +84,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Details View</h5>
+                        <button type="button" class="btn btn-light-primary font-weight-bold addRow">Add Data Kembalian
+                            Buku</button>
+
                         <div id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary"
                             data-bs-dismiss="modal" aria-label="Close">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none">
-                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                        transform="rotate(-45 6 17.3137)" fill="black" />
-                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                        fill="black" />
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                        rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="black" />
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
@@ -124,13 +131,10 @@
                                             min="1" value="0" required onkeyup="inputChange(1)">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-center denda-1" name="denda[]" id=""
-                                            value="0">
+                                        <input type="text" class="form-control text-center denda-1" name="denda[]"
+                                            id="" value="0">
                                     </td>
-                                    <td>
-                                        <button type="button"
-                                            class="btn btn-light-primary font-weight-bold addRow">+</button>
-                                    </td>
+
                                 </tr>
                             </tbody>
                             <!--end::Table body-->
@@ -194,41 +198,56 @@
                 <tr>
                     <td>
                         <select class="form-select ketStatus-` + row +
-                `" aria-label="Select example" name="ketarangan_status[]" onchange="selectChange(` + row + `)">
+                `" aria-label="Select example" id="keterangan-` + row +
+                `" name="ketarangan_status[]" onchange="selectChange(` + row + `)">
                             <option>Open this select keterangan</option>
                             <option value="tepat_waktu">Tepat Waktu</option>
                             <option value="terlambat">Terlambat / ({{ $denda }})</option>
                             <option value="rusak_or_hilang">Rusak atau Hilang / ({{ $rusak }})</option>
                         </select>
                     </td>
-                    <td><input type="number" class="form-control text-center qtyTotal-` + row + `" name="qty[]" min="1"
-                            value="0" required onkeyup="inputChange(` + row + `)">
+                    <td><input type="number" id="qty-` + row +
+                `" class="form-control text-center qtyTotal-` + row + `" name="qty[]" min="1"
+                            value="0"  required onkeyup="inputChange(` + row + `)">
                     </td>
                     <td>
-                        <input type="text" class="form-control text-center denda-` + row +
+                        <input type="text" id="denda-` + row +
+                `" class="form-control text-center denda-` + row +
                 `" name="denda[]" id="" value="0">
                     </td>
                     <td>
                         <a href="javascript:void(0);" class="btn btn-light-danger font-weight-bold" id="remCF">-</a>
                     </td>
+                    <input type="hidden" id="uuid-` + row +
+                `" class="form-control text-center uuid-` + row +
+                `" name="uuid[]" id="" value="0">
                 </tr>
             `
             $('#tableAppend').append(html)
         }
 
-        // function removeRow(row) {
-
-        //     console.log(row);
-        // }
         $("#tableAppend").on('click', '#remCF', function() {
             $(this).parent().parent().remove();
         });
 
-
-
         $('.kebalian_buku').click(function() {
             uuid = $(this).attr('data-uuid');
-            $('.peminjaman_item').val(uuid);
+            $('.peminjaman_item').val($(this).attr('data-id'))
+            $.ajax({
+                url: ajaxUrlAdmin + 'pengembalian/status-item/' + uuid,
+                dataType: "JSON",
+                type: "GET",
+                success: function(result) {
+                    $('#tableAppend tr').remove();
+                    result.forEach((v, k) => {
+                        htmlTableAdd(k)
+                        $('#keterangan-' + k).val(v.ketarangan_status)
+                        $('#qty-' + k).val(v.qty)
+                        $('#denda-' + k).val(v.denda)
+                        $('#uuid-' + k).val(v.uuid)
+                    });
+                },
+            });
         });
     </script>
 @endpush

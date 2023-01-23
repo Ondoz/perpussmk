@@ -37,7 +37,7 @@ Route::group(['prefix' => 'pengembalian', 'as' => 'pengembalian.'], function () 
     Route::get('/', [PengembalianController::class, 'index'])->name('index');
     Route::get('/{id}/edit', [PengembalianController::class, 'edit'])->name('edit');
     Route::get('/item/{id}',  [PengembalianController::class, 'editItem'])->name('editItem');
-    Route::post('/status-item', [PengembalianController::class, 'statusItemUpdate'])->name('update_status_item');
+    Route::get('/status-item/{id}', [PengembalianController::class, 'statusItemUpdate'])->name('update_status_item');
     Route::post('/pengembalian-item-store', [PengembalianController::class, 'storePengembalian'])->name('pengebalian-item-store');
 });
 

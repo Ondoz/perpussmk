@@ -6,6 +6,7 @@ use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanItem;
+use App\Models\PengembalianItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class PengembalianController extends Controller
             $q->withSum('pengembalian_item', 'qty');
         })->get();
         $date_now = Carbon::now()->format('Y-m-d');
+
 
         return view('admin.pengembalian.index', compact('peminjaman', 'date_now'));
     }
@@ -46,34 +48,37 @@ class PengembalianController extends Controller
         return $itemPeminjaman;
     }
 
-    public function statusItemUpdate(Request $request)
+    public function statusItemUpdate($id)
     {
-        $item = PeminjamanItem::where('uuid', $request->uuid)->first();
+        $data = PengembalianItem::where('peminjaman_item_id', $id)->get();
 
-        if ($item) {
-            $item->update([
-                'is_status' => $request->value,
-                'ketarangan_status' => $request->ket_status
-            ]);
-            return true;
-        } else {
-            return false;
-        }
+        return $data;
     }
 
     public function storePengembalian(Request $request)
     {
+
+        // return $request;
         $countQtyRequest = array_sum($request->qty);
         $peminjaman_item = PeminjamanItem::where('uuid', $request->peminjaman_item_id)->first();
         if ($peminjaman_item) {
             if ($countQtyRequest !== 0) {
                 if ($peminjaman_item->qty >= $countQtyRequest) {
                     foreach ($request->qty as $key => $value) {
-                        $peminjaman_item->pengembalian_item()->create([
-                            'qty' => $value,
-                            'ketarangan_status' => $request->ketarangan_status[$key],
-                            'denda' => $request->denda[$key]
-                        ]);
+                        if ($request->uuid[$key] == "0") {
+                            PengembalianItem::create([
+                                'peminjaman_item_id' => $peminjaman_item->id,
+                                'qty' => $value,
+                                'ketarangan_status' => $request->ketarangan_status[$key],
+                                'denda' => $request->denda[$key]
+                            ]);
+                        } else {
+                            PengembalianItem::where('uuid', $request->uuid[$key])->update([
+                                'qty' => $value,
+                                'ketarangan_status' => $request->ketarangan_status[$key],
+                                'denda' => $request->denda[$key]
+                            ]);
+                        }
                     }
                     return back()->with('success', 'Berhasil Mengembalikan');
                 } else {
@@ -86,6 +91,8 @@ class PengembalianController extends Controller
             return false;
         }
     }
+
+
 
     // tambahkan edit pengembalian
 }
