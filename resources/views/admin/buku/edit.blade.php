@@ -165,7 +165,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Description</label>
+                            <label class=" fs-6 fw-bold mb-2">Description</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <textarea cols="30" rows="10" class="form-control form-control-solid" id="description" name="description"
@@ -174,7 +174,7 @@
                         </div>
                         <!--end::Input group-->
                         <div class=" mb-7 fv-row text-center">
-                            <label class="required fs-6 fw-bold mb-2">Cover Buku</label>
+                            <label class=" fs-6 fw-bold mb-2">Cover Buku</label>
                         </div>
                         <div class=" mb-7 fv-row text-center">
                             <!--begin::Image input-->
