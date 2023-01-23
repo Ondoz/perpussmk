@@ -18,8 +18,6 @@ class PengembalianController extends Controller
         })->get();
         $date_now = Carbon::now()->format('Y-m-d');
 
-        // return $peminjaman;
-
         return view('admin.pengembalian.index', compact('peminjaman', 'date_now'));
     }
 

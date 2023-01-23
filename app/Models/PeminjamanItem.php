@@ -46,7 +46,12 @@ class PeminjamanItem extends Model
 
     public function getQtySumPengembalianAttribute()
     {
+
         $data = $this->pengembalian_item()->get();
-        return $data->sum('qty');
+        if ($data) {
+            return $data->sum('qty');
+        } else {
+            return '0';
+        }
     }
 }
