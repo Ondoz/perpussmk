@@ -53,6 +53,7 @@ class BukuController extends Controller
                 'penerbit' => $request->penerbit,
                 'negara' => $request->negara,
                 'jumlah_halaman' => $request->jumlah_halaman,
+                'jumlah_buku' => $request->jumlah_buku,
                 'description' => $request->description,
             ]);
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -87,6 +88,7 @@ class BukuController extends Controller
             'penerbit' => $request->penerbit,
             'negara' => $request->negara,
             'jumlah_halaman' => $request->jumlah_halaman,
+            'jumlah_buku' => $request->jumlah_buku,
             'description' => $request->description
         ]);
 

@@ -22,7 +22,7 @@ class CreateDetailBukusTable extends Migration
             $table->string('penerbit');
             $table->integer('jumlah_halaman');
             $table->text('description');
-            $table->integer('jumlah_buku')->nullable();
+            $table->integer('jumlah_buku')->default(10);
             $table->timestamps();
 
             $table->foreign('buku_id')->references('id')->on('bukus')->onDelete('cascade');
